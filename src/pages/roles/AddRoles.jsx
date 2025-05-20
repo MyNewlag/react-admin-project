@@ -52,6 +52,7 @@ export default function AddRoles() {
                             </div>
                         </div> 
 
+
                         <div className="col-12 my-2">
                             <div className="form-check form-switch col-5 col-md-4">
                                 <input className="form-check-input pointer" type="checkbox" id="flexSwitchCheckDefault" checked onChange={()=>{}}/>
