@@ -4,7 +4,7 @@ import React from 'react'
 import Login from '../../pages/auth/Login'
 import { Route, Routes } from 'react-router-dom'
 import { Navigate } from 'react-router-dom';
-import { useIsLogin } from './../../hook/authHook';
+import { useIsLogin } from '../../hook/authHook';
 
 export default function AuthLayout() {
 

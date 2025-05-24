@@ -17,6 +17,7 @@ import Roles from './roles/Roles';
 import Permissions from './permissions/Permissions';
 import Questions from './questions/Questions';
 import Comments from './comments/Comments';
+import Logout from './auth/Logout';
 
 export default function Content() {
 
@@ -41,6 +42,7 @@ export default function Content() {
               <Route path='/permissions' element={<Permissions/>}/>
               <Route path='/questions' element={<Questions/>}/>
               <Route path='/comments' element={<Comments/>}/>
+              <Route path='/logout' element={<Logout/>}/>
              
               <Route path='*' element={<Dashbord/>}/>
               </Routes>
