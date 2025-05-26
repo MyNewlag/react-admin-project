@@ -1,14 +1,13 @@
 
 
 import React from 'react';
-import { FastField, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import * as yup from 'yup';
 
 import AuthFormikControl from '../../components/authForm/AuthFormikControl';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import swal from 'sweetalert';
 import { Alert } from '../../utils/Alert';
+import { loginService } from '../../service/auth';
 
 
 const initialValues ={
@@ -16,28 +15,25 @@ const initialValues ={
     password: "",
     remember: false
 }
-const onSubmit = (values,submitMethods,navigate)=>{
-    console.log(submitMethods);
-    
-        axios.post('https://ecomadminapi.azhadev.ir/api/auth/login' , {
-            ...values ,
-            remember:values.remember? 1 : 0
-        }).then(res=>{
-            //  console.log(res);
-            if(res.status==200){
-                localStorage.setItem('loginToken' , JSON.stringify(res.data))
-                navigate('/')
-                submitMethods.setSubmitting(false)
-            }else{
-                // console.log(res);
-                Alert("خطا",res.data.message,"error")
-                submitMethods.setSubmitting(false)
-            }
-        }).catch(error=>{
-            submitMethods.setSubmitting(false)
-             Alert("خطا",'متاسفم مشکلی در سمت سرور رخ داده است',"error")
-          })
+const onSubmit = async (values,submitMethods,navigate)=>{
+    try {
+    const res=await loginService(values)
+        if(res.status==200){
+            localStorage.setItem('loginToken' , JSON.stringify(res.data))
+            navigate('/')
+            // submitMethods.setSubmitting(false)
+        }else{
+            // console.log(res);
+            Alert("خطا",res.data.message,"error")
+        }
+        submitMethods.setSubmitting(false)
+        
+    } catch (error) {
+        submitMethods.setSubmitting(false)
+        Alert("خطا",'متاسفم مشکلی در سمت سرور رخ داده است',"error")
+          }
     }
+ 
 
 const validationSchema = yup.object({
     phone:yup.number().required('لطفا این قسمت را پر کنید'),
@@ -57,7 +53,7 @@ const Login = () => {
                 >
                     {
                         formik=>{
-                            console.log(formik);
+                            // console.log(formik);
                             return(                                
                                 <div className="wrap-login100">
                                     <Form className="login100-form validate-form pos-relative d-flex flex-column align-items-center justify-content-center">
