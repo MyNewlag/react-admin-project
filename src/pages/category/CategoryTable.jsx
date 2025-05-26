@@ -1,86 +1,57 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PaginatedTable from '../../components/PaginatedTable'
 import AddCategory from './AddCategory'
+import { getCategoriesService } from '../../service/getCategoriesService';
+import { Alert } from '../../utils/Alert';
+import ShowInMenu from './tableAdditions/ShowInMenu';
+import Actions from './tableAdditions/Actions';
 
 export default function CategoryTable() {
 
-     const data=[
-        {
-            id:"1",
-            category:"aaa",
-            title:"ab",
-            price:"1",
-            stock:"4",
-            like_count:"2",
-            status:"2"
-        },
-        {
-            id:"2",
-            category:"bbb",
-            title:"abb",
-            price:"2",
-            stock:"4",
-            like_count:"2",
-            status:"2"
-        },
-        {
-            id:"3",
-            category:"abbb",
-            title:"abbb",
-            price:"3",
-            stock:"4",
-            like_count:"2",
-            status:"2"
-        },
-        {
-            id:"4",
-            category:"ddd",
-            title:"ddd",
-            price:"4",
-            stock:"4",
-            like_count:"2",
-            status:"2"
-        },
-    
-        {
-            id:"5",
-            category:"ddd",
-            title:"eee",
-            price:"5",
-            stock:"4",
-            like_count:"2",
-            status:"2"
-        },
-    
-    ]
+  const [data ,setData]=useState([]);
+
+const handleGetCategories=async ()=>{
+  try {
+    const res=await getCategoriesService()
+    if (res.status==200) {
+      setData(res.data.data)
+    }else{
+       Alert("خطا",res.data.message,"error")
+    }
+  } catch (error) {
+     Alert("خطا","مشکل از سمت سرور است","error")
+  }
+}
+
+useEffect(()=>{
+  handleGetCategories()
+},[])
+   
 
     const dataInfo=[
         {field:"id" , title:"#"},
         {field:"title" , title:"عنوان محصول"},
-        {field:"price" , title:"قیمت محصول"}
+        // {field:"show_in_menu" , title:"نمایش در منو"},
+        {field:"parent_id" , title:"والد"},
+        {field:"created_at" , title:"تاریخ"}
     ]
 
 
-    const additionalElements=(itemId)=>{
-        return(
-            <>
-                <i className="fas fa-project-diagram text-info mx-1 hoverable_text pointer has_tooltip"
-                 title="زیرمجموعه" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-                <i className="fas fa-edit text-warning mx-1 hoverable_text pointer has_tooltip" 
-                title="ویرایش دسته" data-bs-toggle="modal" data-bs-placement="top" data-bs-target="#add_product_category_modal"></i>
-                <i className="fas fa-plus text-success mx-1 hoverable_text pointer has_tooltip" 
-                title="افزودن ویژگی" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#add_product_category_attr_modal"></i>
-                <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" 
-                title="حذف دسته" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-            </>
-        )
-    }
 
-   const additionFeild ={
-    title:"عملیات",
-    elements:(itemId)=>additionalElements(itemId)
-   }
+
+   const additionFeild =[
+     {
+       title:"نمابش در منو",
+       elements:(rowData)=><ShowInMenu rowData={rowData}/>
+      },
+      {
+      title:"عملیات",
+      elements:(rowData)=><Actions rowData={rowData}/>
+     },
+]
+
+
 
   return (
     <>
@@ -90,6 +61,7 @@ export default function CategoryTable() {
     additionFeild={additionFeild}
     numOfPage={2}
     >
+      
       <AddCategory/>
     </PaginatedTable>
            {/*  <nav aria-label="Page navigation example" className="d-flex justify-content-center">

@@ -31,9 +31,10 @@ useEffect(()=>{
 
 
 useEffect(()=>{
+  console.log(data)
  setInitData(data.filter(i=>i.title.includes(searchChar)))
  setCurentPage(1)
-},[searchChar])
+},[searchChar,data])
 
 
 useEffect(()=>{
@@ -68,8 +69,10 @@ useEffect(()=>{
                     ))
                   }
                   {
-                    additionFeild? (
-                      <th>{additionFeild.title}</th>
+                    additionFeild ? (
+                      additionFeild.map((a , index)=>(
+                        <th key={a.id+"__"+index}>{a.title}</th>
+                      ))
                     ):""
                   }
 
@@ -84,8 +87,10 @@ useEffect(()=>{
                         <td key={i.field+"_"+d.id}>{d[i.field]}</td>
                       ))}
                   {
-                    additionFeild? (
-                      <td>{additionFeild.elements(d.id)}</td>
+                       additionFeild ? (
+                      additionFeild.map((a , index)=>(
+                        <td key={a.id+"__"+index}>{a.elements(d)}</td>
+                      ))
                     ):""
                   }                    
                    </tr>
