@@ -31,7 +31,6 @@ useEffect(()=>{
 
 
 useEffect(()=>{
-  console.log(data)
  setInitData(data.filter(i=>i.title.includes(searchChar)))
  setCurentPage(1)
 },[searchChar,data])
@@ -68,6 +67,7 @@ useEffect(()=>{
                       <th key={i.field}>{i.title}</th>
                     ))
                   }
+
                   {
                     additionFeild ? (
                       additionFeild.map((a , index)=>(
