@@ -1,7 +1,9 @@
 
 import React from 'react'
 import Input from './input'
-import Swich from './Swich';
+import Switch from '../form/Switch';
+
+
 
 
 
@@ -11,8 +13,8 @@ export default function AuthFormikControl(props) {
         case 'input':
             return <Input {...props}/>
 
-        case 'swich':
-            return <Swich {...props}/>
+        case 'switch':
+            return <Switch {...props}/>
 
             
             default:

@@ -80,7 +80,7 @@ const Login = () => {
                                         />
 
                                         <AuthFormikControl
-                                        control="swich"
+                                        control="switch"
                                         name="remember"
                                         label="مرا بخاطر بسپار   "
                                         />
