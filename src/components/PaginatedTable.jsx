@@ -1,9 +1,10 @@
 
 
 import React, { useEffect, useState } from 'react'
+import SpinnerLoad from './SpinnerLoad'
 
 
-export default function PaginatedTable({data,dataInfo,additionFeild,children,numOfPage,searchParams}) {
+export default function PaginatedTable({data,dataInfo,additionFeild,children,numOfPage,searchParams,loading}) {
 
 
 
@@ -91,6 +92,11 @@ const downItemInPage=()=>{
             </div>
       </div>
 
+          {
+            loading?(
+              <SpinnerLoad colorClass={"text-primary"}/>
+            ):
+            data.length ?(
            <table className="table table-responsive text-center table-hover table-bordered">
                 <thead className="table-secondary">
                 <tr>
@@ -126,6 +132,11 @@ const downItemInPage=()=>{
 
                 </tbody>
             </table>
+
+            ):(
+              <h4 className='text-center my-5 text-danger'>دسته بندی برای نمایش  وجود ندارد</h4>
+            )
+          }
 
             { pageCount>1
               ?(

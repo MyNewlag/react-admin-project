@@ -24,8 +24,8 @@ const onSubmit = async (values,submitMethods,navigate)=>{
             navigate('/')
             // submitMethods.setSubmitting(false)
         }else{
-            // console.log(res);
-            Alert("خطا",res.data.message,"error")
+            console.log(res.status);
+            Alert("خطا...",res.data.message,"error")
         }
         submitMethods.setSubmitting(false)
         

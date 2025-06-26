@@ -3,10 +3,12 @@
 import React, { useEffect, useState } from 'react'
 import ModalsContainer from '../../components/ModalsContainer'
 import * as yup from 'yup';
-import { Form, Formik } from 'formik';
+import { FastField, Form, Formik } from 'formik';
 import FormikControl from './../../components/form/FormikControl';
-import { getCategoriesService } from '../../service/getCategoriesService';
+import { createNewCategoryService, getCategoriesService } from '../../service/category';
 import { useParams } from 'react-router-dom';
+import { Alert } from '../../utils/Alert';
+import SpinnerLoad from '../../components/SpinnerLoad';
 
 
 const initialValues={
@@ -18,10 +20,26 @@ const initialValues={
     show_in_menu:true,
 }
 
-
-const onSubmit =(values)=>{
-    console.log(values);
-}
+const onSubmit = async (values, actions, setForceRender) => {
+  console.log(actions);
+  try {
+    values = {
+      ...values,
+      is_active: values.is_active ? 1 : 0,
+      show_in_menu: values.show_in_menu ? 1 : 0,
+    }
+    const res = await createNewCategoryService(values)
+    console.log(res);
+    if (res.status == 201) {
+      Alert('ثبت رکورد', res.data.message, 'success');
+      actions.resetForm();
+      setForceRender(last=>last+1)
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+//   console.log(values);
+};
 
 
 const validationSchema =yup.object({
@@ -30,23 +48,20 @@ const validationSchema =yup.object({
         "فقط از حروف و اعداد استفاده کنید"),
     description:yup.string().required("لطفا این قست را پر کنید").matches(/^[\u0600-\u06FF\sa-zA-Z0-9@!%$?&]+$/,
         "فقط از حروف و اعداد استفاده کنید"),
-     image:yup.mixed().test(
-            "filesize",
-            "حجم فایل نمیتواند بیشتر از 500 کیلو بایت باشد",
-     (value)=>!value ?true :(value.size <= 500 *1024)
-        )
-        .test(
-            "format",
-            "فرمت فایل باید jpg باشد",
-            (value)=>!value ?true : (value.type==="image/jpeg")
-        ),
+     image: yup.mixed()
+    .test("filesize", "حجم فایل نمیتواند بیشتر 500 کیلوبایت باشد", (value) =>
+      !value ? true : value.size <= 500 * 1024
+    )
+    .test("format", "فرمت فایل باید jpg باشد", (value) =>
+      !value ? true : value.type === "image/jpeg"
+    ),
         is_active:yup.boolean(),
         show_in_menu:yup.boolean(),
 });
 
 
 
-export default function AddCategory() {
+export default function AddCategory({setForceRender}) {
     
     const params=useParams()
 
@@ -62,8 +77,7 @@ export default function AddCategory() {
                 setParents(
                     allParents.map(a=>{
                        return {id:a.id , value:a.title}
-                    }))
-                
+                    })) 
             }
         } catch (error) {
             
@@ -101,7 +115,7 @@ export default function AddCategory() {
 
             <Formik
             initialValues={reInitialValue||initialValues}
-            onSubmit={onSubmit}
+            onSubmit={(values,action)=>onSubmit(values,action,setForceRender)}
             validationSchema={validationSchema}
             enableReinitialize
             >
@@ -167,7 +181,17 @@ export default function AddCategory() {
                     </div>
 
                     <div className='btn_box text-center col-12 col-md-6 col-lg-8 mt-4'>
-                        <button type="submit" className='btn btn-primary'>ذخیره</button>
+                        <FastField>
+                            {({form})=>{
+                                return(
+                                     <button type="submit" className='btn btn-primary'>ذخیره
+                                   {form.isSubmitting ?   <SpinnerLoad colorClass={"text-white"}
+                                   isSmall={true} inline={true}/> : null}
+                                     </button> 
+
+                                )
+                            }}
+                        </FastField>
                     </div>
 
                  </div>

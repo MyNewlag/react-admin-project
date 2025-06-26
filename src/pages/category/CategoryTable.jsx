@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import PaginatedTable from '../../components/PaginatedTable'
 import AddCategory from './AddCategory'
-import { getCategoriesService } from '../../service/getCategoriesService';
+import { getCategoriesService } from '../../service/category';
 import ShowInMenu from './tableAdditions/ShowInMenu';
 import Actions from './tableAdditions/Actions';
 import { Outlet, useParams } from 'react-router-dom';
@@ -13,9 +13,11 @@ export default function CategoryTable() {
 
     const params=useParams()
     const [data ,setData]=useState([]);
+    const [forceRender ,setForceRender]=useState(0);
+    const [loading ,setloading]=useState(false);
 
-  const handleGetCategories=async ()=>{
-
+  const handleGetCategories=async()=>{
+    setloading(true)
     try {
       const res=await getCategoriesService(params.categoryId)
       if (res.status==200) {
@@ -25,14 +27,16 @@ export default function CategoryTable() {
       //   Alert("خطا",res.data.message,"error")
       // }
     } catch (error) {
-
+      console.log(error.message);
+    } finally{
+      setloading(false)
     }
   }
 
 
   useEffect(()=>{
     handleGetCategories()
-  },[params])
+  },[params,forceRender])
 
       const dataInfo=[
           {field:"id" , title:"#"},
@@ -67,39 +71,20 @@ export default function CategoryTable() {
       <Outlet/>
 
       {
-        data.length ?
-        (
+       
       <PaginatedTable
       data={data}
       dataInfo={dataInfo}
       additionFeild={additionFeild}
       numOfPage={4}
       searchParams={searchParams}
+      loading={loading}
       >
 
-      <AddCategory/>
+      <AddCategory setForceRender={setForceRender}/>
       </PaginatedTable>
-        ):(
-          <h4 className='text-center my-5 text-danger'>دسته بندی برای نمایش  وجود ندارد</h4>
-        )
+       
       }
-            {/*  <nav aria-label="Page navigation example" className="d-flex justify-content-center">
-                  <ul className="pagination dir_ltr">
-                    <li className="page-item">
-                      <a className="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                    <li className="page-item"><a className="page-link" href="#">1</a></li>
-                    <li className="page-item"><a className="page-link" href="#">2</a></li>
-                    <li className="page-item"><a className="page-link" href="#">3</a></li>
-                    <li className="page-item">
-                      <a className="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav> */}
       </>
     )
 }
