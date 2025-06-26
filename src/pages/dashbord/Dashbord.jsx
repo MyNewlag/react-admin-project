@@ -10,8 +10,6 @@ export default function Dashbord() {
 
 
 useEffect(()=>{
- 
-    
     const labels = ['فروردین' , 'اردیبهشت', 'خرداد' , 'تیر' , 'مرداد' , 'شهریور' ,
         'مهر' , 'آبان' , 'آذر' , 'دی' , 'بهمن' , 'اسفند'];
         
@@ -21,8 +19,6 @@ useEffect(()=>{
         return()=>{
             destroyChart()
         }
-
-
 },[])
 
 

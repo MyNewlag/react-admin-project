@@ -12,7 +12,7 @@ export default function AddComments() {
                 <i className="fas fa-plus text-light"></i>
             </button>
                 <ModalsContainer
-                 fullScreen={true}
+                 fullScreen={false}
                 id="add_comment_modal"
                  title="افزورن تخفیف جدید"
                 >

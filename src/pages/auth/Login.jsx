@@ -16,6 +16,7 @@ const initialValues ={
     remember: false
 }
 const onSubmit = async (values,submitMethods,navigate)=>{
+    // console.log(submitMethods); 
     try {
     const res=await loginService(values)
         if(res.status==200){

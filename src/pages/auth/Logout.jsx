@@ -21,7 +21,7 @@ export default function Logout() {
     }
   } catch (error) {
       setLoading(false)
-     Alert("خطا",'متاسفم مشکلی در سمت سرور رخ داده ',"error")
+     Alert("خطا",'متاسفم یک مشکلی در سمت سرور رخ داده ',"error")
   }
 
  }

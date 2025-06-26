@@ -3,7 +3,6 @@ import Category from './category/Category'
 import Dashbord from './dashbord/Dashbord'
 import { AdminContext } from '../context/AdminLayoutContext';
 import Product from './product/Product';
-import PaginatedTable from '../components/PaginatedTable';
 import { Route, Routes } from 'react-router-dom';
 import Colors from './colors/Colors';
 import Guaranties from './guaranties/Guaranties';
@@ -19,6 +18,7 @@ import Questions from './questions/Questions';
 import Comments from './comments/Comments';
 import Logout from './auth/Logout';
 import CategoryChildren from './category/CategoryChildren';
+import AddAttribute from './category/attrs/AddAttribute';
 
 export default function Content() {
 
@@ -34,6 +34,7 @@ export default function Content() {
                 <Route path=':categoryId' element={<CategoryChildren/>}/>
               </Route>
 
+              <Route path='/categories/:categoryId/attributes' element={<AddAttribute/>}/>
               <Route path='/products' element={<Product/>}/>
               <Route path='/colors' element={<Colors/>}/>
               <Route path='/guaranties' element={<Guaranties/>}/>

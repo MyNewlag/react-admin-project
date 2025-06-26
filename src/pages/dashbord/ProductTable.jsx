@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function ProductTable({number,number2,number3,number4}) {
   return (
-        <tr>
+      <tr>
         <td>{number}</td>
         <td>{number2}</td>
         <td>{number3}</td>

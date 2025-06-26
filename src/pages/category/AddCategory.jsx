@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { Form, Formik } from 'formik';
 import FormikControl from './../../components/form/FormikControl';
 import { getCategoriesService } from '../../service/getCategoriesService';
-import { Alert } from './../../utils/Alert';
+import { useParams } from 'react-router-dom';
 
 
 const initialValues={
@@ -47,8 +47,12 @@ const validationSchema =yup.object({
 
 
 export default function AddCategory() {
+    
+    const params=useParams()
 
     const [parents,setParents]=useState([])
+    const [reInitialValue,setReInitialValue]=useState(null)
+
     const handleGetParentsCategories =async ()=>{
         try {
             const  res=await getCategoriesService()
@@ -62,13 +66,26 @@ export default function AddCategory() {
                 
             }
         } catch (error) {
-            Alert("خطا !!!" , "متاسفانه دسته بندی های والد دریافت نشد", "warning")
+            
         }
     }
 
+
     useEffect(()=>{
         handleGetParentsCategories()
-    })
+    },[])
+
+    useEffect(()=>{
+        if(params.categoryId){
+            setReInitialValue({
+                ...initialValues,
+                parent_id:params.categoryId
+            })
+        }else{
+            setReInitialValue(null)
+        }   
+    },[params.categoryId])
+    
 
   return (
     <>
@@ -83,9 +100,10 @@ export default function AddCategory() {
          >     
 
             <Formik
-            initialValues={initialValues}
+            initialValues={reInitialValue||initialValues}
             onSubmit={onSubmit}
             validationSchema={validationSchema}
+            enableReinitialize
             >
 
             <Form>
@@ -104,7 +122,7 @@ export default function AddCategory() {
                     ):
                     null
                 }
-              
+                
 
                 <FormikControl
                 className="col-md-6 col-lg-8"
@@ -132,20 +150,20 @@ export default function AddCategory() {
                 />
 
                     <div className='col-12 col-md-6 col-lg-8 row justify-content-center'>
-                    <div className='col-12 col-md-4 col-lg-3 mx-lg-5'>
-                        <FormikControl
-                        control="switch"
-                        name="is_active"
-                        label=" وضعیت فعال "
-                        />
-                    </div>
-                    <div className='col-12 col-md-4 col-lg-3 mx-lg-5'>
-                        <FormikControl
-                        control="switch"
-                        name="show_in_menu"
-                        label="نمایش در منو"
-                        />
-                    </div>
+                        <div className='col-12 col-md-4 col-lg-3 mx-lg-5'>
+                            <FormikControl
+                            control="switch"
+                            name="is_active"
+                            label=" وضعیت فعال "
+                            />
+                        </div>
+                        <div className='col-12 col-md-4 col-lg-3 mx-lg-5'>
+                            <FormikControl
+                            control="switch"
+                            name="show_in_menu"
+                            label="نمایش در منو"
+                            />
+                        </div>
                     </div>
 
                     <div className='btn_box text-center col-12 col-md-6 col-lg-8 mt-4'>

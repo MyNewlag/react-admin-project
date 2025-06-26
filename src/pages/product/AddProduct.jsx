@@ -157,7 +157,7 @@ export default function AddProduct() {
                     </div>
                 </div>
 
-     </ModalsContainer>
+        </ModalsContainer>
       </>
   )
 }

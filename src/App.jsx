@@ -1,7 +1,7 @@
 
 
 import './App.css'
-import AdminLayout from '/src/layouts/admin/Index'
+import AdminLayout from './layouts/admin/Index'
 import AuthLayout from './layouts/authLayout/AuthLayout';
 import { useLocation } from 'react-router-dom';
 

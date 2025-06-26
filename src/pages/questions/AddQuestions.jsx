@@ -12,7 +12,7 @@ export default function AddQuestions() {
          </button>
 
         <ModalsContainer
-           fullScreen={true}
+           fullScreen={false}
         id="add_question_modal"
         title="افزورن تخفیف جدید"
         >
