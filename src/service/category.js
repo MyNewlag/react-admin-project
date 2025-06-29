@@ -16,6 +16,11 @@ export const editCategoryService=(id,data)=>{
 }
 
 
+export const deleteCategoryService=(id)=>{
+  return httpService(`/admin/categories/${id}`, 'delete')
+}
+
+
 
 export const createNewCategoryService=(data)=>{
 

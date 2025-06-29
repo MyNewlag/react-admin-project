@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CategoryContext } from './../../../context/CategoryContext';
 
-export default function Actions({rowData}) {
+export default function Actions({rowData,handleDeleteCategory}) {
 
   const params=useParams()
   
@@ -39,7 +39,7 @@ export default function Actions({rowData}) {
 
         <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" 
         title="حذف دسته" data-bs-toggle="tooltip" data-bs-placement="top"
-        ></i>
+        onClick={()=>handleDeleteCategory(rowData)}></i>
      </>
   )
 }
