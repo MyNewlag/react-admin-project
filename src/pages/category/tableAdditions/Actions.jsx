@@ -1,12 +1,14 @@
 
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { CategoryContext } from './../../../context/CategoryContext';
 
 export default function Actions({rowData}) {
 
   const params=useParams()
   
   const navigate=useNavigate();
+  const {setEditId}=useContext(CategoryContext)
   return (
       <>
       {
@@ -25,7 +27,8 @@ export default function Actions({rowData}) {
       
        
         <i className="fas fa-edit text-warning mx-1 hoverable_text pointer has_tooltip" 
-        title="ویرایش دسته" data-bs-toggle="modal" data-bs-placement="top" data-bs-target="#add_product_category_modal"></i>
+        title="ویرایش دسته" data-bs-toggle="modal" data-bs-placement="top"
+         data-bs-target="#add_product_category_modal" onClick={()=>setEditId(rowData.id)} ></i>
 
         <i className="fas fa-plus text-success mx-1 hoverable_text pointer has_tooltip" 
         title="افزودن ویژگی" data-bs-placement="top" 
@@ -35,7 +38,8 @@ export default function Actions({rowData}) {
         ></i>
 
         <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" 
-        title="حذف دسته" data-bs-toggle="tooltip" data-bs-placement="top"></i>
+        title="حذف دسته" data-bs-toggle="tooltip" data-bs-placement="top"
+        ></i>
      </>
   )
 }

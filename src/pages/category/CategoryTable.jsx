@@ -33,6 +33,7 @@ export default function CategoryTable() {
     }
   }
 
+// console.log(data.length);
 
   useEffect(()=>{
     handleGetCategories()
@@ -76,7 +77,7 @@ export default function CategoryTable() {
       data={data}
       dataInfo={dataInfo}
       additionFeild={additionFeild}
-      numOfPage={4}
+      numOfPage={6}
       searchParams={searchParams}
       loading={loading}
       >
