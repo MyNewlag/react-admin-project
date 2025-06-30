@@ -34,12 +34,13 @@ export default function CategoryTable() {
     }
   }
 
-  const handleDeleteCategory=async(data)=>{
-    if(await Confirm("حذف دسته بندی",`آیا از حذف (${data.title}) اطمینان دارید ؟`)){
+  const handleDeleteCategory=async(rowData)=>{
+    if(await Confirm("حذف دسته بندی",`آیا از حذف (${rowData.title}) اطمینان دارید ؟`)){
      try {
-      const res=await deleteCategoryService(data.id)
+      const res=await deleteCategoryService(rowData.id)
       if(res.status==200){
-         Alert("حذف دسته",`حذف (${data.title}) با موفقیت انجام شد`,"success")
+         Alert("حذف دسته",`حذف (${rowData.title}) با موفقیت انجام شد`,"success")
+          setData(data.filter(d=>d.id!=rowData.id))
       }else{
            Alert("خطا ","حذف انجام نشد","error")
       }
@@ -61,7 +62,6 @@ export default function CategoryTable() {
           // {field:"show_in_menu" , title:"نمایش در منو"},
           {field:"parent_id" , title:"والد"},
       ]
-
 
   const searchParams={
     title:"سرچ",

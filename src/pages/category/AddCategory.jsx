@@ -10,6 +10,7 @@ import SpinnerLoad from '../../components/SpinnerLoad';
 import { CategoryContext } from '../../context/CategoryContext';
 import { initialValues, onSubmit, validationSchema } from './core';
 import { Alert } from '../../utils/Alert';
+import SumbitBotton from '../../components/form/SumbitBotton';
 
 
 
@@ -167,17 +168,7 @@ export default function AddCategory({setForceRender}){
                     </div>
 
                     <div className='btn_box text-center col-12 col-md-6 col-lg-8 mt-4'>
-                        <FastField>
-                            {({form})=>{
-                                return(
-                                     <button type="submit" className='btn btn-primary' disabled={form.isSubmitting}>ذخیره
-                                   {form.isSubmitting ?   <SpinnerLoad colorClass={"text-white"}
-                                   isSmall={true} inline={true}/> : null}
-                                     </button> 
-
-                                )
-                            }}
-                        </FastField>
+                        <SumbitBotton/>
                     </div>
 
                  </div>

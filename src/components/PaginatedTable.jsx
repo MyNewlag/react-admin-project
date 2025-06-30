@@ -52,7 +52,6 @@ const upItemInPage=()=>{
   }
 }
 
-
 const downItemInPage=()=>{
   if(itemInPage==1){
     setItemInPage(1)
@@ -65,7 +64,7 @@ const downItemInPage=()=>{
 
   return (
      <>
-            <div className="col-7 col-md-6 col-lg-4 mt-5">
+            {/* <div className="col-7 col-md-6 col-lg-4 mt-5">
                 <div className="input-group mb-3 dir_ltr">
                   <button className='btn btn-danger d-flex justify-content-center align-items-center'
                     onClick={downItemInPage}>کاهش رکورد</button>
@@ -76,7 +75,7 @@ const downItemInPage=()=>{
                   />
                     <span className="input-group-text" >تعداد رکورد</span>
                 </div>
-            </div>
+            </div> */}
 
      <div className="row justify-content-between">
             <div className="col-10 col-md-6 col-lg-4">
@@ -88,7 +87,6 @@ const downItemInPage=()=>{
             </div>
             <div className="col-2 col-md-6 col-lg-4 d-flex flex-column align-items-end">
             {children}
-            {/* <AddCategory/> */}
             </div>
       </div>
 
@@ -134,7 +132,7 @@ const downItemInPage=()=>{
             </table>
 
             ):(
-              <h4 className='text-center my-5 text-danger'>دسته بندی برای نمایش  وجود ندارد</h4>
+              <h4 className='text-center my-5 text-danger'>رکوردی برای نمایش  وجود ندارد</h4>
             )
           }
 
