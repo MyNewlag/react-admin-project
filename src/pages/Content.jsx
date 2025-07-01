@@ -18,7 +18,7 @@ import Questions from './questions/Questions';
 import Comments from './comments/Comments';
 import Logout from './auth/Logout';
 import CategoryChildren from './category/CategoryChildren';
-import AddAttribute from './category/attrs/AddAttribute';
+import Attributes from './category/attrs/Attributes';
 
 export default function Content() {
 
@@ -34,7 +34,7 @@ export default function Content() {
                 <Route path=':categoryId' element={<CategoryChildren/>}/>
               </Route>
 
-              <Route path='/categories/:categoryId/attributes' element={<AddAttribute/>}/>
+              <Route path='/categories/:categoryId/attributes' element={<Attributes/>}/>
               <Route path='/products' element={<Product/>}/>
               <Route path='/colors' element={<Colors/>}/>
               <Route path='/guaranties' element={<Guaranties/>}/>

@@ -2,11 +2,10 @@
 
 import React, { useContext, useEffect, useState } from 'react'
 import ModalsContainer from '../../components/ModalsContainer'
-import { FastField, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import FormikControl from './../../components/form/FormikControl';
 import {  getCategoriesService, getSingleCategories } from '../../service/category';
 import { useParams } from 'react-router-dom';
-import SpinnerLoad from '../../components/SpinnerLoad';
 import { CategoryContext } from '../../context/CategoryContext';
 import { initialValues, onSubmit, validationSchema } from './core';
 import { Alert } from '../../utils/Alert';
@@ -33,6 +32,7 @@ export default function AddCategory({setForceRender}){
                     })) 
                 }
             } catch (error) {
+                
             }
     }
 
@@ -180,4 +180,4 @@ export default function AddCategory({setForceRender}){
   )
 }
 
-// export default  AddCategory
+

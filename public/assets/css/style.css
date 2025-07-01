@@ -384,6 +384,9 @@ td , th {
     background: -moz-linear-gradient(90deg, hsla(217, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 100%);
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0061FF", endColorstr="#60EFFF", GradientType=1 );
 }
+.danger_shadow {
+    box-shadow: 0 0 10px rgb(255,0,0,0.4);
+}
 
 
 /* content end-------<<<<<<< */
