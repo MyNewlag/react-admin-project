@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-export default function AttAction({rowData,editAttribute,setEditAttribute}) {
+export default function AttAction({rowData,editAttribute,setEditAttribute,handleDeleteAttr}) {
   return (
     <div className={`text-center ${editAttribute ? "alert-danger danger_shadow" : ""}`}>
       
@@ -13,7 +13,7 @@ export default function AttAction({rowData,editAttribute,setEditAttribute}) {
       
         <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" 
         title="حذف ویژگی" data-bs-toggle="tooltip" data-bs-placement="top"
-        ></i>
+        onClick={()=>handleDeleteAttr(rowData)}></i>
     </div>
   )
 }

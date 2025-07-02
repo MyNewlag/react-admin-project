@@ -5,66 +5,16 @@ import PaginatedTable from '../../../components/PaginatedTable';
 import ShowInFilter from './ShowInFilter';
 import AttAction from './AttAction';
 import PrevPageButton from '../../../components/PrevPageButton';
-import { addCategoryAttrService, editCategoryAttrService, getCategoryAttrService } from '../../../service/categoryAttr';
-import { Alert } from '../../../utils/Alert';
+import {  deleteCategoryAttrService, getCategoryAttrService } from '../../../service/categoryAttr';
+import { Alert, Confirm } from '../../../utils/Alert';
 import { Form, Formik } from 'formik';
-import * as yup from 'yup';
 import FormikControl from '../../../components/form/FormikControl';
 import SumbitBotton from '../../../components/form/SumbitBotton';
+import { initialValues, onSubmit, validationSchema } from './coreAttr';
+import AddAttr from './AddAttr';
 
 
-     const onSubmit=async(values,action,catId,setData,editAttribute,setEditAttribute)=>{
-        try {
-        values={
-             ...values ,
-             in_filter: values.in_filter ? 1 : 0
-         }
-
-        if (editAttribute){
-            const res= await editCategoryAttrService(editAttribute.id,values)
-           if(res.status==200){
-
-            setData(oldData=>{
-               const newData=[...oldData]
-               const index=newData.findIndex(d=>d.id===editAttribute.id)
-               newData[index]=res.data.data
-               return newData
-            })
-          Alert("موفقیت",res.data.message,"success")
-          setEditAttribute(null)
-        }else{
-            Alert("خطا","آیتم ویرایش نشد","error")
-           }
-            
-        }else{
-            const res=await addCategoryAttrService(catId,values)     
-            if(res.status==201){
-                setData(oldData=>[...oldData,res.data.data])
-                Alert("اضافه شد","ویژگی به لیست اضافه شد","success")
-                action.resetForm()
-            }
-         }
-         } catch (error) {
-            console.log(error.message);  
-         }   
-        }
-
-
-    const initialValues={
-        title:"",
-        unit:"",
-        in_filter:""
-    }
-
-     const validationSchema =yup.object({
-        id:yup.number(),
-        title:yup.string().required("لطفا این قست را پر کنید").matches(/^[\u0600-\u06FF\sa-zA-Z0-9@!%$?&]+$/,
-            "فقط از حروف و اعداد استفاده کنید"),
-        unit:yup.string().required("لطفا این قست را پر کنید").matches(/^[\u0600-\u06FF\sa-zA-Z0-9@!%$?&]+$/,
-            "فقط از حروف و اعداد استفاده کنید"),
-         in_filter:yup.boolean()
-          
-    });
+ 
 
 export default function Attributes() {
 
@@ -89,7 +39,8 @@ export default function Attributes() {
             {
             title:"عملیات",
                 elements:(rowData)=><AttAction rowData={rowData}
-                editAttribute={editAttribute} setEditAttribute={setEditAttribute}/>
+                editAttribute={editAttribute} setEditAttribute={setEditAttribute}
+                handleDeleteAttr={handleDeleteAttr}/>
         }]
         
         
@@ -100,7 +51,7 @@ export default function Attributes() {
   }
 
   const handleGetAttr=async()=>{
-        setLoading(false)
+        setLoading(true)
     try {
          const res=await getCategoryAttrService(location.state.categoryData.id)
     if (res.status==200) {
@@ -118,6 +69,26 @@ export default function Attributes() {
     }
     
   }
+
+  const handleDeleteAttr=async (rowData)=>{
+     if ( await Confirm(`حذف   ${rowData.title}` , `آیا از حذف  {${rowData.title}} اطمینان دارید؟`)){
+         try {
+             const res=await deleteCategoryAttrService(rowData.id)
+             if (res.status==200) {
+               Alert('موفقیت','','success')  
+            //    setData (data.filter(d=>d.id!=rowData.id))
+               setData(lastData=>[...lastData.filter(d=>d.id!=rowData.id)])
+            //   setData(lastData=>console.log(lastData))
+             }else{
+               Alert('!!!','شما از حذف منصرف شدید','warning')  
+             }
+         } catch (error) {
+             console.log(error.message);
+         }
+        }else{
+            Alert('!!!','شما از حذف منصرف شدید','warning')  
+        }
+}
 
 
   useEffect(()=>{
@@ -148,7 +119,7 @@ export default function Attributes() {
         <div className="container">
             <div className="row justify-content-center">
 
-                <Formik
+                {/* <Formik
                 initialValues={reInitialValue || initialValues}
                 onSubmit={(values,action)=>onSubmit(values,action,location.state.categoryData.id
                     ,setData,editAttribute,setEditAttribute
@@ -200,7 +171,15 @@ export default function Attributes() {
                     </div>
                 </div>
                     </Form>
-                </Formik>
+                </Formik> */}
+                <AddAttr 
+                reInitialValue={reInitialValue}
+                location={location}
+                setData={setData}
+                editAttribute={editAttribute}
+                setEditAttribute={setEditAttribute}
+                />
+
                 <hr/>
                 
                   <PaginatedTable
