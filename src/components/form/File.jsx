@@ -8,7 +8,7 @@ export default function File({name,label,className,placeholder}) {
       {({form}) => {
         return (
           <div className={`col-12 ${className}`}>
-            <div className="input-group mb-3 dir_ltr">
+            <div className="input-group  my-3 mb-3 dir_ltr">
               <input
                 type="file"
                 className="form-control"

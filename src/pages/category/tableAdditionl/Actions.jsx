@@ -1,7 +1,7 @@
 
 import React, { useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { CategoryContext } from './../../../context/CategoryContext';
+import { CategoryContext } from '../../../context/CategoryContext';
 
 export default function Actions({rowData,handleDeleteCategory}) {
 
@@ -9,6 +9,7 @@ export default function Actions({rowData,handleDeleteCategory}) {
   
   const navigate=useNavigate();
   const {setEditId}=useContext(CategoryContext)
+  
   return (
       <>
       {

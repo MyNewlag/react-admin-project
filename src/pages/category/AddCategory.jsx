@@ -21,6 +21,7 @@ export default function AddCategory({setForceRender}){
     const [editCategory,setEditCategory]=useState(null)
     const [reInitialValue,setReInitialValue]=useState(null)
 
+    
     const handleGetParentsCategories =async ()=>{
         try {
             const res=await getCategoriesService();
@@ -39,7 +40,6 @@ export default function AddCategory({setForceRender}){
     const handleGetSingleCategory=async ()=>{
         try {
            const res= await getSingleCategories(editId)
-           console.log(res.data.data);
            if(res.status==200){
                setEditCategory(res.data.data)
             }

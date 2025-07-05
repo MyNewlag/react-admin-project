@@ -8,6 +8,7 @@ export default function Guaranties() {
   return (
     <div id="manage_guarantee_section" className="manage_guarantee_section main_section">
             <h4 className="text-center my-3">مدیریت گارانتی ها</h4>
+
             <div className="row justify-content-between">
                 <div className="col-10 col-md-6 col-lg-4">
                     <div className="input-group mb-3 dir_ltr">

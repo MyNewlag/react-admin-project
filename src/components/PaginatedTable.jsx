@@ -4,10 +4,11 @@ import React, { useEffect, useState } from 'react'
 import SpinnerLoad from './SpinnerLoad'
 
 
-export default function PaginatedTable({data,dataInfo,additionFeild,children,numOfPage,searchParams,loading}) {
+export default function PaginatedTable({data,dataInfo,additionFeild,children,
+  numOfPage,searchParams,loading}) {
+// console.log(data);
 
-
-
+  
 const [itemInPage,setItemInPage]=useState(numOfPage)
 const [initData,setInitData]=useState(data)
 const [searchChar,setSearchChar]=useState("")
@@ -168,8 +169,6 @@ const downItemInPage=()=>{
               ):
               null
             }
-
- 
     </>
   )
 }

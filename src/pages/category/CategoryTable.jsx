@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import PaginatedTable from '../../components/PaginatedTable'
 import AddCategory from './AddCategory'
 import { deleteCategoryService, getCategoriesService } from '../../service/category';
-import ShowInMenu from './tableAdditions/ShowInMenu';
-import Actions from './tableAdditions/Actions';
+import ShowInMenu from './tableAdditionl/ShowInMenu';
+import Actions from './tableAdditionl/Actions';
 import { Outlet, useParams } from 'react-router-dom';
 import { convertDateToJalali } from '../../utils/convertDate';
 import { Alert, Confirm } from '../../utils/Alert';
@@ -64,7 +64,7 @@ export default function CategoryTable() {
       ]
 
   const searchParams={
-    title:"سرچ",
+    title:"جستجو",
     placeholder:"متن رو وارد کن",
     searchField:"title"
   }
@@ -75,12 +75,12 @@ export default function CategoryTable() {
         elements:(rowData)=> convertDateToJalali(rowData.created_at)
         },
       {
-        title:"نمابش در منو",
+        title:"نمایش در منو",
         elements:(rowData)=><ShowInMenu rowData={rowData}/>
         },
         {
         title:"عملیات",
-        elements:(rowData)=><Actions rowData={rowData} handleDeleteCategory={handleDeleteCategory}/>
+        elements:(rowData)=> <Actions rowData={rowData} handleDeleteCategory={handleDeleteCategory}/>
       }]
 
     return (
@@ -88,7 +88,6 @@ export default function CategoryTable() {
       <Outlet/>
 
       {
-       
       <PaginatedTable
       data={data}
       dataInfo={dataInfo}
@@ -100,7 +99,6 @@ export default function CategoryTable() {
 
       <AddCategory setForceRender={setForceRender}/>
       </PaginatedTable>
-       
       }
       </>
     )
