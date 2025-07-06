@@ -7,7 +7,7 @@ export default function TextArea({name,label,className,placeholder}) {
         <div className={`col-12 ${className}`}>
             <div className="input-group mb-3 dir_ltr">
                 <FastField as="textarea" name={name} className="form-control" placeholder={placeholder} />
-                <span className="input-group-text w_6rem justify-content-center"> {label} </span>
+                <span className="input-group-text w_8rem justify-content-center"> {label} </span>
             </div>
             <ErrorMessage name={name} component={FormikError}/>
         </div>

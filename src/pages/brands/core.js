@@ -15,14 +15,16 @@ export const onSubmit=async(values,actions,setData,brandToEdit)=>{
                 newData[index]=res.data.data
                 return newData
               })
-        }
-    }else{
-        const res = await newBrandService(values)
-        console.log(res);
+              
+            }
+        }else{
+            const res = await newBrandService(values)
+            console.log(res);
             if (res.status==201) {
                 Alert(" موفقیت","برند جدید ثبت شد","success")
                 setData(lastData=>[...lastData,res.data.data])
             }
+            actions.resetForm()
         }
     }
 

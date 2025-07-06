@@ -1,48 +1,80 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import PaginatedTable from '../../components/PaginatedTable'
+import AddGuarantie from './AddGuarantie';
+import { deleteGuarantieServices, editGuarantieServices, getAllGuarantieServices } from './../../service/guarantie';
+import Actions from './guarantiAdditional/Actions';
+import { Alert, Confirm } from '../../utils/Alert';
 
 export default function GuarantieTable() {
+
+    const [data,setData]=useState([])
+    const [loading,setLoading]=useState(false)
+      const [editGuarantie,setEditGuarantie]=useState()
+      
+
+
+    const handleGetGuaranties=async()=>{
+        setLoading(true)
+        const res = await getAllGuarantieServices()
+        if (res.status==200) {
+            setData(res.data.data)
+            setLoading(false)
+        }
+    }
+
+
+    const handleDeleteGuarantie=async(rowData)=>{
+        if (await Confirm('حذف گارانتی',`آیا از حذف ${rowData.title} اطمینان دارید؟`)) {
+            const res=await deleteGuarantieServices(rowData.id)
+            if (res.status==200) {
+                setData(lastData=>[...lastData].filter(d=>d.id!=rowData.id))
+                Alert("حذف گارامنی","گارانتی با موفقیت حذف شد","success")
+            }
+        }
+    }
+
+
+    const dataInfo=[
+        {field:"id" , title:"#"},
+        {field:"title" , title:"عنوان گارانتی"},
+        {field:"descriptions" , title:"توضیحات"},
+        {field:"length" , title:"مدت گارانتی "},
+    ]
+
+    const additionFeild=[
+    {title:"عملیات",
+        elements:(rowData)=><Actions rowData={rowData}
+         handleDeleteGuarantie={handleDeleteGuarantie} 
+         setEditGuarantie={setEditGuarantie}/>
+        }
+    ]
+
+    const searchParams={
+     title:"جستجو",
+    placeholder:"متن رو وارد کن",
+    searchField:"title"
+    }
+
+    useEffect(()=>{
+        handleGetGuaranties()
+    },[])
+
   return (
     <div>
-                  <table className="table table-responsive text-center table-hover table-bordered">
-                <thead className="table-secondary">
-                    <tr>
-                        <th>#</th>
-                        <th>عنوان گارانتی</th>
-                        <th>مدت گارانتی</th>
-                        <th>توضیحات</th>
-                        <th>عملیات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>گارانتی 1</td>
-                        <td>12 ماه</td>
-                        <td> توضیحات اجمالی در مورد این گارانتی</td>
-                        <td>
-                            <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" title="حذف گارانتی" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <nav aria-label="Page navigation example" className="d-flex justify-content-center">
-                <ul className="pagination dir_ltr">
-                    <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                    </li>
-                    <li className="page-item"><a className="page-link" href="#">1</a></li>
-                    <li className="page-item"><a className="page-link" href="#">2</a></li>
-                    <li className="page-item"><a className="page-link" href="#">3</a></li>
-                    <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                    </li>
-                </ul>
-                </nav>
+
+        <PaginatedTable
+        data={data}
+        dataInfo={dataInfo}
+        additionFeild={additionFeild}
+        numOfPage={6}
+       searchParams={searchParams}
+        loading={loading}
+        >
+            <AddGuarantie setData={setData} editGuarantie={editGuarantie}
+             setEditGuarantie={setEditGuarantie}/>
+        </PaginatedTable>
+
     </div>
   )
 }
