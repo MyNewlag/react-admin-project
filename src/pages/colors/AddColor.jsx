@@ -1,42 +1,115 @@
 
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ModalsContainer from '../../components/ModalsContainer'
-
-export default function AddColor() {
-  return (
-
-        <>
-                <button className="btn btn-success d-flex justify-content-center align-items-center"
-                    data-bs-toggle="modal" data-bs-target="#add_color_modal">
-                    <i className="fas fa-plus text-light"></i>
-                </button>
+import { FastField, Form, Formik } from 'formik'
+import FormikControl from '../../components/form/FormikControl';
+import SumbitBotton from '../../components/form/SumbitBotton';
+import { initialValues, onSubmit, validationSchema } from './core';
 
 
-                <ModalsContainer
+export default function AddColor({editColor,setEditColor, setData}) {
+
+    const [reinitializeValue,setReinitializeValue]=useState(null)
+    const [colorPickerValue,setColorPickerValue]=useState("#000000")
+
+
+
+    useEffect(()=>{
+      if(editColor){    
+        setColorPickerValue(editColor.code)
+        setReinitializeValue({
+          title:editColor.title ,
+          code:editColor.code
+        })
+      }else{
+        setColorPickerValue("#000")
+        setReinitializeValue(null)
+      }
+    },[editColor])
+    
+    
+    const handleChangeColorCodeField=(e , form)=>{
+      setColorPickerValue(e.target.value)
+      form.setFieldValue("code",e.target.value)
+      
+      // console.log(e.target.value);
+    }
+
+    const handleColor=()=>{
+      setColorPickerValue("#000")
+      setEditColor(null)
+
+    }
+    
+    return (
+
+    <div>
+        <button className="btn btn-success d-flex justify-content-center align-items-center"
+            data-bs-toggle="modal" data-bs-target="#add_color_modal"
+             onClick={handleColor}>
+            <i className="fas fa-plus text-light"
+           ></i>
+        </button>
+
+            <ModalsContainer
                 fullScreen={false}
                 id="add_color_modal"
-                title="افزورن رنگ جدید"
+                title={editColor ? "ویرایش رنگ" : "افزودن رنگ جدید"}
                 >
+
                 <div className="container">
                     <div className="row justify-content-center">
-                        <div className="col-12">
-                            <div className="input-group my-3 dir_ltr">
-                                <input type="text" className="form-control" placeholder=""/>
-                                <span className="input-group-text w_8rem justify-content-center">نام رنگ</span>
-                            </div>
-                        </div>
-                        <div className="col-12">
-                            <label htmlFor="exampleColorInput" className="form-label">انتخاب رنگ</label>
-                            <input type="color" className="form-control form-control-color" id="exampleColorInput"
-                            value="#563d7c" onChange={()=>{}} title="Choose your color"/>
-                        </div>                        
+                    <Formik
+                    initialValues={reinitializeValue || initialValues}
+                    onSubmit={(values,action)=>onSubmit(values,action,setData,editColor,setColorPickerValue)}
+                    validationSchema={validationSchema}
+                    enableReinitialize
+                    >
+                                
+                       <Form>
+
+                        <FormikControl
+                        control="input"
+                        type="text"
+                        name="title"
+                        label="نام رنگ "
+                        placeholder=""
+                        />
+
+                         <FastField>
+                  {({form}) => {
+                    return (
+                      <div className="col-12 d-flex align-items-center justify-content-start">
+                        <label
+                          htmlFor="exampleColorInput"
+                          className="form-label m-0"
+                        >
+                          انتخاب رنگ
+                        </label>
+                        <input
+                          type="color"
+                          className="form-control form-control-color mx-3"
+                          id="code"
+                          name="code"
+                          title="انتخاب رنگ"
+                          value={colorPickerValue}
+                          onChange={(e)=>handleChangeColorCodeField(e, form)}
+                        />
+                      </div>
+                    );
+                  }}
+                </FastField>
+
                         <div className="btn_box text-center col-12 col-md-6 col-lg-8 mt-4">
-                            <button className="btn btn-primary ">ذخیره</button>
+                            <SumbitBotton/>
                         </div>
+
+                       </Form>
+                 </Formik>
                     </div>
                 </div>
         </ModalsContainer>
-        </>
+    </div>
   )
 }

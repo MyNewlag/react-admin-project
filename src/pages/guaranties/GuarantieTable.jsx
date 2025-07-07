@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import PaginatedTable from '../../components/PaginatedTable'
 import AddGuarantie from './AddGuarantie';
-import { deleteGuarantieServices, editGuarantieServices, getAllGuarantieServices } from './../../service/guarantie';
+import { deleteGuarantieServices, getAllGuarantieServices } from './../../service/guarantie';
 import Actions from './guarantiAdditional/Actions';
 import { Alert, Confirm } from '../../utils/Alert';
 

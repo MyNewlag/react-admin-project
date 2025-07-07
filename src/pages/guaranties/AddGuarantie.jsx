@@ -35,22 +35,22 @@ export default function AddGuarantie({setData,editGuarantie,setEditGuarantie}) {
              <i className="fas fa-plus text-light"></i>
           </button>
     
-  <ModalsContainer
-    fullScreen={false}
-    id="add_guarantee_modal"
-  title={editGuarantie ? "ویرایش گارانتی":"افزورن گارانتی جدید"}
-  >
+          <ModalsContainer
+            fullScreen={false}
+            id="add_guarantee_modal"
+          title={editGuarantie ? "ویرایش گارانتی":"افزورن گارانتی جدید"}
+          >
 
             <div className="container">
                 <div className="row justify-content-center">
-    <Formik
-    initialValues={reInitialize || initialValues}
-    onSubmit={(values,actions)=>onSubmit(values,actions,setData,editGuarantie)}
-    validationSchema={validationSchema}
-    enableReinitialize
-    >
+                  <Formik
+                  initialValues={reInitialize || initialValues}
+                  onSubmit={(values,actions)=>onSubmit(values,actions,setData,editGuarantie)}
+                  validationSchema={validationSchema}
+                  enableReinitialize
+                  >
 
-        <Form>
+                <Form>
 
                 <FormikControl
                 control="input"
