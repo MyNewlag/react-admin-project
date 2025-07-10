@@ -17,7 +17,7 @@ const [tableData,setTableData]=useState([])
 const [curentPage,setCurentPage]=useState(1)
 
 const [pageCount,setPageCount]=useState(1)       // تعداد صفحات
-const [pages,setPages]=useState([])              //شماره صفحات
+const [pages,setPages]=useState([])              //شماره های صفحات
 
 
 useEffect(()=>{
@@ -25,7 +25,8 @@ useEffect(()=>{
   setPageCount(pCount)
   let pArr=[]
   for(let i=1;i<=pCount;i++){
-    pArr=[...pArr ,i]
+    // pArr=[...pArr ,i]
+    pArr.push(i)
     setPages(pArr)  
   }
 },[initData,itemInPage])
@@ -96,7 +97,7 @@ const downItemInPage=()=>{
               <SpinnerLoad colorClass={"text-primary"}/>
             ):
             data.length ?(
-           <table className="table table-responsive text-center table-hover table-bordered">
+          <table className="table table-responsive text-center table-hover table-bordered">
                 <thead className="table-secondary">
                 <tr>
                   {dataInfo.map(i=>(
@@ -128,9 +129,8 @@ const downItemInPage=()=>{
                   }                    
                    </tr>
                    ))}
-
                 </tbody>
-            </table>
+           </table>
 
             ):(
               <h4 className='text-center my-5 text-danger'>رکوردی برای نمایش  وجود ندارد</h4>
