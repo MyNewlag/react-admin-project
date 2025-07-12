@@ -4,7 +4,10 @@ import React, { useEffect, useState } from 'react'
 import PaginatedDataTable from '../../components/PaginatedDataTable'
 import AddProduct from './AddProduct'
 import Actions from './tableAddition/Actions'
-import { getProductsService } from '../../service/products'
+import { deleteProductsService, getProductsService } from '../../service/products'
+import { Alert, Confirm } from '../../utils/Alert'
+import { Link } from 'react-router-dom'
+import AddButtonLink from '../../components/form/AddButtonLink'
 
 export default function TableProduct() {
   const [data,setData]=useState([])
@@ -28,8 +31,23 @@ export default function TableProduct() {
         {field:"title" , title:"عنوان "},
         {field:"price" , title:"قیمت"},
         {field:"stock" , title:"موجودی"},
-        {field:null , title:"عملیات" , elements:(rowData)=><Actions rowData={rowData}/>},
+        {field:null , title:"عملیات" , elements:(rowData)=><Actions rowData={rowData}
+         handleDeleteProduct={handleDeleteProduct}/>},
     ]
+
+
+    const handleDeleteProduct=async (rowData)=>{
+      if( await Confirm("حذف !!!",`آیا از حذف  ${rowData.title} اطمینان دارید؟`)){
+        const res=await deleteProductsService(rowData.id)
+        if (res.status==200) {
+          Alert("موفقست",`رکورد ${rowData.title} حذف شد `,"success")
+           handleGetProducts(curentPage,countOnPage,searchChar)
+        }
+      }else{
+          console.log("از حذف منصرف شدید!!!");
+      }
+        
+    }
 
 
     const searchParams={
@@ -47,6 +65,9 @@ export default function TableProduct() {
     }
   }
 
+        
+  
+
 
   const handleSearch=(char)=>{
     setSearchChar(char)
@@ -59,7 +80,7 @@ export default function TableProduct() {
   },[curentPage])
 
   return (
-
+    
     <PaginatedDataTable
     tableData={data}
     dataInfo={dataInfo}
@@ -70,30 +91,11 @@ export default function TableProduct() {
     pageCount={pageCount}
     handleSearch={handleSearch}
     >
-      <AddProduct/>
+ 
+      <AddButtonLink href={"/products/add-product"}/>
       
     </PaginatedDataTable>
     
-    
-    // <div>
-
-    //          <nav aria-label="Page navigation example" className="d-flex justify-content-center">
-    //             <ul className="pagination dir_ltr">
-    //               <li className="page-item">
-    //                 <a className="page-link" href="#" aria-label="Previous">
-    //                   <span aria-hidden="true">&raquo;</span>
-    //                 </a>
-    //               </li>
-    //               <li className="page-item"><a className="page-link" href="#">1</a></li>
-    //               <li className="page-item"><a className="page-link" href="#">2</a></li>
-    //               <li className="page-item"><a className="page-link" href="#">3</a></li>
-    //               <li className="page-item">
-    //                 <a className="page-link" href="#" aria-label="Next">
-    //                   <span aria-hidden="true">&laquo;</span>
-    //                 </a>
-    //               </li>
-    //             </ul>
-    //           </nav>
-    // </div>
+  
   )
 }

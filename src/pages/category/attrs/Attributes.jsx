@@ -10,7 +10,6 @@ import { Alert, Confirm } from '../../../utils/Alert';
 import AddAttr from './AddAttr';
 
 
- 
 
 export default function Attributes() {
 

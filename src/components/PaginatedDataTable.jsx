@@ -16,8 +16,9 @@ export default function PaginatedDataTable({
       }) {
 
 
+        
     const [pages,setPages]=useState([])        //شماره های صفحات
-
+    const pageRange=2;
 
 
     let timeOut;
@@ -96,13 +97,39 @@ export default function PaginatedDataTable({
                       <span aria-hidden="true">&raquo;</span>
                     </span>
                   </li>
+
+                  {
+                    curentPage>pageRange ? (
+                      <li className='page-item me-2'
+                      onClick={()=>setCurentPage(1)}>
+                        <span className='page-link pointer'>
+                          1
+                        </span>
+                      </li>
+                    ): null
+                  }
                   
                   {
-                    pages.map(p=>(
+                    pages.map(p=>{
+                      return p<curentPage+pageRange && p>curentPage-pageRange ? (
                       <li key={p} className="page-item pointer">
                         <a className={`page-link ${curentPage==p ? "alert-danger":""}`} 
-                        onClick={()=>setCurentPage(p)}>{p}</a></li>
-                    ))
+                        onClick={()=>setCurentPage(p)}>
+                          {p}
+                        </a>
+                      </li>
+                    ):null
+                  })}
+
+                  {
+                    curentPage<=pageCount-pageRange ?(
+                         <li className='page-item ms-2'
+                      onClick={()=>setCurentPage(pageCount)}>
+                        <span className='page-link pointer'>
+                          {pageCount}
+                        </span>
+                      </li>
+                    ): null
                   }
                 
                   <li className="page-item">

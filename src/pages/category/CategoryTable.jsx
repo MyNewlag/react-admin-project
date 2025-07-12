@@ -56,6 +56,7 @@ export default function CategoryTable() {
     handleGetCategories()
   },[params,forceRender])
 
+
       const dataInfo=[
           {field:"id" , title:"#"},
           {field:"title" , title:"عنوان محصول"},
@@ -80,7 +81,8 @@ export default function CategoryTable() {
         },
         {
         title:"عملیات",
-        elements:(rowData)=> <Actions rowData={rowData} handleDeleteCategory={handleDeleteCategory}/>
+        elements:(rowData)=> <Actions rowData={rowData} 
+        handleDeleteCategory={handleDeleteCategory}/>
       }]
 
     return (

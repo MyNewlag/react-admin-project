@@ -33,7 +33,7 @@ export default function AddCategory({setForceRender}){
                     })) 
                 }
             } catch (error) {
-                
+                console.log(error);
             }
     }
 
@@ -44,6 +44,7 @@ export default function AddCategory({setForceRender}){
                setEditCategory(res.data.data)
             }
         } catch (error) {
+               console.log(error);
             Alert("مشکل ...!!!" , "دسته بندی مورد نظر یافت نشد" , "warning")
         }
     }
@@ -115,6 +116,7 @@ export default function AddCategory({setForceRender}){
                     options={parents}
                     name="parent_id"
                     label="دسته والد"
+                    firstItem="دسته مورد نظر را انتخاب کنید"
                     />
                     ):
                     null
