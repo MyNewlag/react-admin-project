@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 export default function PrevPageButton() {
     const navigate=useNavigate()
   return (
-        <button className='btn btn-sm btn-secondary' onClick={()=>navigate(-1)}>بازگشت </button>
+        <button className='btn btn-sm btn-secondary' type="button"
+        onClick={()=>navigate(-1)}>بازگشت </button>
   )
 }

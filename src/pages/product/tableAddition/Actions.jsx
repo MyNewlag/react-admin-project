@@ -1,12 +1,16 @@
 
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Actions({rowData,handleDeleteProduct}) {
+  const navigate=useNavigate()
   return (
     <>
         <i className="fas fa-edit text-warning mx-1 hoverable_text pointer has_tooltip" 
-        title="ویرایش ممحصول" data-bs-toggle="modal" data-bs-placement="top"
-         data-bs-target="#add_color_modal" 
+        title="ویرایش محصول" 
+        onClick={()=>navigate('/products/add-product' ,
+          {state:{productToEdit:rowData}}
+        )}
          ></i>
 
           <i

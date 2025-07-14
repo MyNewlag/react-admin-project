@@ -1,15 +1,23 @@
 import * as yup from "yup";
-import { addProductsService } from "../../service/products";
+import { addProductsService, editProductsService } from "../../service/products";
 import { Alert } from "../../utils/Alert";
 
-export const onSubmit = async (values , action) => {
-  const res=await addProductsService(values)
-  console.log(res.status);
-  
-  if (res.status==201) {
-    Alert('OK',res.data.message, 'success')
+export const onSubmit = async (values , action ,rowData) => {
+
+
+  if (rowData) {
+    const res=await editProductsService(rowData.id , values)
+    if (res.status==200) {
+       Alert('OK',res.data.message, 'success')
+    }
+  }else{
+    const res=await addProductsService(values)
+    if (res.status==201) {
+      Alert('OK',res.data.message, 'success')
+      action.resetForm()
+    }
   }
-};
+}
 
 export const initialValues = {
   category_ids: "",

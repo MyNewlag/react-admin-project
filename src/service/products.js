@@ -8,6 +8,13 @@ export const getProductsService=(page,countOnPage,searchChar)=>{
 export const deleteProductsService=(id)=>{
     return httpService(`/admin/products/${id}`,'delete');
 }
+
+
 export const addProductsService=(data)=>{
     return httpService(`/admin/products`,'post' , data.image ? convertDataToFormdata(data) : data);
+}
+
+
+export const editProductsService=(id,data)=>{
+    return httpService(`/admin/products/${id}`,'put' ,data);
 }

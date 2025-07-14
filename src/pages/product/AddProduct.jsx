@@ -11,6 +11,7 @@ import SubmitBotton from '../../components/form/SubmitBotton';
 import { getAllBrandsService } from '../../service/brands'
 import { getColorsService } from '../../service/color'
 import { getAllGuarantieServices } from './../../service/guarantie';
+import { useLocation } from 'react-router-dom'
 
 export default function AddProduct() {
     const [parentCategories,setParentCategories]=useState([])
@@ -18,10 +19,18 @@ export default function AddProduct() {
     const [brands, setBrands] = useState([])
     const [colors, setColors] = useState([])
     const [guaranties, setGuaranties] = useState([])
+    const [reInitialValue, setReInitialValue] = useState(null)
 
+    const [selectedCategories,setSelectedCategories] = useState([])
+    const [selectedColors,setSelectedColors] = useState([])
+    const [selectedGuarantees,setSelectedGuarantees] = useState([])
+
+
+    const location=useLocation()
+    const rowData=location.state?.productToEdit
     
 
-    const getAllParentCategories=async()=>{
+  const getAllParentCategories=async()=>{
          const res=await getCategoriesService()
          if (res.status==200) {
             setParentCategories(
@@ -39,6 +48,7 @@ export default function AddProduct() {
       }));
     }
   }
+
   const getAllColors = async ()=>{
     const res = await getColorsService();
     if (res.status === 200) {
@@ -47,6 +57,7 @@ export default function AddProduct() {
       }));
     }
   }
+
   const getAllGuaranties = async ()=>{
     const res = await getAllGuarantieServices();
     if (res.status === 200) {
@@ -70,28 +81,76 @@ export default function AddProduct() {
       }
     }
 
+    const setIntialSelectedValues=()=>{
+      if (rowData) {
+
+        setSelectedCategories(
+         rowData.categories.map(c=>{
+           return {id:c.id , value:c.title}
+         }))
+
+         setSelectedColors(
+          rowData.colors.map(c=>{
+            return{id:c.id , value:c.title}
+          }))
+
+          setSelectedGuarantees(
+            rowData.guarantees.map(g=>{
+              return {id:g.id , value:g.title}
+            }))
+      }
+    }
+
     useEffect(()=>{
         getAllParentCategories()
         getAllBrands()
         getAllColors()
         getAllGuaranties()
+        setIntialSelectedValues()
+
+        for(const key in rowData){
+          if(rowData[key]===null) rowData[key]=""
+        }
+        
+        if(rowData){
+          setReInitialValue({
+            ...rowData,
+            category_ids:rowData.categories.map(c=>c.id).join("-"),
+            color_ids:rowData.colors.map(c=>c.id).join("-"),
+            guarantee_ids:rowData.guarantees.map(c=>c.id).join("-")
+          })
+        }else{
+          setReInitialValue(null)
+        }
     },[])
+
+    // useEffect(()=>{
+    //   setReInitialValue(rowData)
+    // },[rowData])
 
   return  (
 
     <Formik
-    initialValues={initialValues}
-    onSubmit={onSubmit}
+    initialValues={ reInitialValue||initialValues}
+    onSubmit={(values,action)=>onSubmit(values,action,rowData)}
     validationSchema={validationSchema}
+    enableReinitialize
     >
 
     {formik=>{
-        console.log(formik);
+        // console.log(formik);
         
         return(
              <Form>
           <div className="container">
-            <h4 className='text-center my-3'> افزودن محصول جدید</h4>
+
+             <h4 className='text-center my-3'>{ rowData ? 
+            ( <>
+                ویرایش : <span className='text-primary'>{rowData.title}</span>
+             </>)
+              :(" افزودن محصول جدید" )
+              } </h4>
+
             <div className='text-left col-md-6 col-lg-8 m-auto my-3'>
                 <PrevPageButton/>
             </div>
@@ -121,6 +180,7 @@ export default function AddProduct() {
                   name="category_ids"
                   firstItem="دسته مورد نظر را انتخاب کنبد..."
                   resultType="string"
+                  initialItems={selectedCategories}
                   />  
                   
                         
@@ -160,9 +220,6 @@ export default function AddProduct() {
                   name="brand_id"
                   firstItem="برند مورد نظر را انتخاب کنبد..."
                   /> 
-
-
- 
                   
                   <FormikControl
                   label="رنگ"
@@ -172,6 +229,7 @@ export default function AddProduct() {
                   name="color_ids"
                   firstItem="رنگ مورد نظر را انتخاب کنبد..."
                  resultType="string"
+                 initialItems={selectedColors}
                   /> 
 
                   <FormikControl
@@ -182,18 +240,10 @@ export default function AddProduct() {
                   name="guarantee_ids"
                   firstItem="گارانتی مورد نظر را انتخاب کنبد..."
                    resultType="string"
+                   initialItems={selectedGuarantees}
                   /> 
 
-                {/* <div className="col-12 col-md-6 col-lg-8">
-                    <div className="input-group mb-3 dir_ltr">
-                        <span className="input-group-text justify-content-center">
-                            <i className="fas fa-plus text-success hoverable_text pointer"></i>
-                        </span>
-                        <input type="text" className="form-control" placeholder="قسمتی از نام برند را وارد کنید" list="brandLists"/>
-                        <span className="input-group-text w_6rem justify-content-center">برند</span>
-
-                    </div>
-                </div> */}
+  
 
 
                   <FormikControl
@@ -220,13 +270,19 @@ export default function AddProduct() {
                     placeholder="فقط از حروف واعداد استفاده شود"
                   />
 
-                  <FormikControl
-                  label="تصویر"
-                  className="col-md-6 col-lg-8"
-                  control="file"
-                  name="image"
-                  placeholder="تصویر"
-                  />
+                  {
+                    !rowData ?(
+                      <FormikControl
+                      label="تصویر"
+                      className="col-md-6 col-lg-8"
+                      control="file"
+                      name="image"
+                      placeholder="تصویر"
+                      />
+                    ):(
+                      null
+                    )
+                  }
 
                   <FormikControl
                   label="توضیح تصویر "
@@ -266,21 +322,18 @@ export default function AddProduct() {
 
         
                 <div className="btn_box text-center col-12 col-md-6 col-lg-8 mt-4">
-                    <SubmitBotton/>
-                   
+                    <SubmitBotton id={location.state?.productToEdit.id}/>
                     <PrevPageButton className="me-2"/>
-                  </div>
+                 </div>
+      
 
             </div>
         </div>
         </Form>
         )
     }}
-       
 
     </Formik>
-
-
 
   )
 }

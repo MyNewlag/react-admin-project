@@ -3,41 +3,45 @@ import React, { useEffect, useState } from 'react'
 import FormikError from './FormikError'
 import { ErrorMessage, Field } from 'formik'
 
-export default function SearchableSelect({resultType,options,name,label,className,firstItem}) {
+export default function SearchableSelect({resultType,options,name,label,className,firstItem,initialItems}) {
 
         const [selectItems,setSelectItems]=useState([])
         const [showItems,setShowItems]=useState(false)
         const [copyOptions,setCopyOptions]=useState(options)
- 
-        
-    
-            const handleSelectItems=async(selectId,formik)=>{
-                  setSelectItems(oldData=>{
-                if (oldData.findIndex(d=>d.id==selectId)== -1 && selectId>0) {
-                    const newData = [...oldData , options.filter(c=>c.id==selectId)[0]]
 
-                    const selectIds=newData.map(n=>n.id)
-                    const valueType=(resultType=="string" ? selectIds.join("-") : selectIds)
-                    formik.setFieldValue(name,valueType)
-                    return newData
-                }else{
-                    return oldData
-                }
-            })
-        }
+
+    
+        const handleSelectItems=async(selectId,formik)=>{
+              setSelectItems(oldData=>{
+            if (oldData.findIndex(d=>d.id==selectId)== -1 && selectId>0) {
+                const newData = [...oldData , options.filter(c=>c.id==selectId)[0]]
+
+                const selectIds=newData.map(n=>n.id)
+                const valueType=(resultType=="string" ? selectIds.join("-") : selectIds)
+                formik.setFieldValue(name,valueType)
+                return newData
+            }else{
+                return oldData
+            }
+          })
+       }
 
         const handleDeleteFromSelectItems=(e,id,formik)=>{
-    event.stopPropagation()
-    setSelectItems((oldData) => {
-      const newData = oldData.filter((d) => d.id != id);
+        e.stopPropagation()
+        setSelectItems((oldData) => {
+          const newData = oldData.filter((d) => d.id != id);
 
-      const selectedIds = newData.map((n) => n.id);
-      const nameValue = resultType == "string" ? selectedIds.join("-") : selectedIds
-      formik.setFieldValue(name, nameValue);
+          const selectedIds = newData.map((n) => n.id);
+          const nameValue = resultType == "string" ? selectedIds.join("-") : selectedIds
+          formik.setFieldValue(name, nameValue);
 
-      return newData;
-    });
-  };
+          return newData;
+        });
+      };
+
+      useEffect(()=>{
+        setSelectItems(initialItems)
+      },[initialItems])
 
         useEffect(() => {
           setCopyOptions(options)

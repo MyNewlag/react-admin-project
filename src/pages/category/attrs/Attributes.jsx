@@ -47,7 +47,6 @@ export default function Attributes() {
 
   const handleGetAttr=async()=>{
         setLoading(true)
-
     try {
          const res=await getCategoryAttrService(location.state.categoryData.id)
     if (res.status==200) {

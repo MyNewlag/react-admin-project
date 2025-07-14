@@ -4,7 +4,8 @@ import { Alert } from '../../../utils/Alert';
 import { addCategoryAttrService, editCategoryAttrService } from '../../../service/categoryAttr';
 
 
-    export const onSubmit=async(values,action,catId,setData,editAttribute,setEditAttribute)=>{
+    export const onSubmit=async(values,action,catId,setData,
+        editAttribute,setEditAttribute)=>{
         try {
         values={
              ...values ,
