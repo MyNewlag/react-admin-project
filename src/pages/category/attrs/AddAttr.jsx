@@ -3,7 +3,7 @@ import React from 'react'
 import { Form, Formik } from "formik";
 import { initialValues, onSubmit, validationSchema } from "./coreAttr";
 import FormikControl from '../../../components/form/FormikControl';
-import SumbitBotton from '../../../components/form/SumbitBotton';
+import SubmitBotton from '../../../components/form/SubmitBotton';
 
                        
           
@@ -52,7 +52,7 @@ import SumbitBotton from '../../../components/form/SumbitBotton';
             </div>
 
             <div className="col-4 col-lg-2 d-flex justify-content-center align-items-start my-1">
-                <SumbitBotton/>
+                <SubmitBotton/>
                 {
                 editAttribute ?
                 <button className=' byn btn-sm btn-secondary'

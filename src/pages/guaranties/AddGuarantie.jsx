@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ModalsContainer from '../../components/ModalsContainer'
 import { Form, Formik } from 'formik'
 import FormikControl from '../../components/form/FormikControl';
-import SumbitBotton from '../../components/form/SumbitBotton';
+import SubmitBotton from '../../components/form/SubmitBotton';
 import { initialValues, onSubmit, validationSchema } from './core';
 
 
@@ -86,7 +86,7 @@ export default function AddGuarantie({setData,editGuarantie,setEditGuarantie}) {
 
                              
                 <div className="btn_box text-center col-12 col-md-6 col-lg-8 mt-4">
-                     <SumbitBotton/>
+                     <SubmitBotton/>
                 </div>
                
               </Form>

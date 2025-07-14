@@ -6,11 +6,19 @@ import Input from './Input'
 import Textarea from './TextArea'
 import File from './File'
 import Switch from './Switch'
+import MultiSelect from './MultiSelect'
+import SearchableSelect from './SearchableSelect'
 
 export default function FormikControl(props) {
     switch (props.control) {
         case 'select':
             return <Select {...props}/>
+
+        case 'multiSelect':
+            return <MultiSelect {...props}/>
+
+        case 'searchableSelect':
+            return <SearchableSelect {...props}/>
 
         case 'input':
             return <Input {...props}/>

@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import { CategoryContext } from '../../context/CategoryContext';
 import { initialValues, onSubmit, validationSchema } from './core';
 import { Alert } from '../../utils/Alert';
-import SumbitBotton from '../../components/form/SumbitBotton';
+import SubmitBotton from '../../components/form/SubmitBotton';
 
 
 
@@ -170,7 +170,7 @@ export default function AddCategory({setForceRender}){
                     </div>
 
                     <div className='btn_box text-center col-12 col-md-6 col-lg-8 mt-4'>
-                        <SumbitBotton/>
+                        <SubmitBotton/>
                     </div>
 
                  </div>

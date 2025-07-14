@@ -23,5 +23,5 @@ export default function File({name,label,className,placeholder}) {
         );
       }}
     </FastField>
-  )
-}
+  );
+};

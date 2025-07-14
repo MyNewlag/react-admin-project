@@ -3,7 +3,7 @@ import { FastField } from 'formik';
 import React from 'react'
 import SpinnerLoad from '../SpinnerLoad';
 
-export default function SumbitBotton() {
+export default function SubmitBotton() {
    return (
         <FastField>
         {({ form }) => {
