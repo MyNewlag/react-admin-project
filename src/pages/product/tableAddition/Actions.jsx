@@ -16,8 +16,8 @@ export default function Actions({rowData,handleDeleteProduct}) {
           <i
             className="fas fa-receipt text-info mx-1 hoverable_text pointer has_tooltip"
             title="ثبت ویژگی"
-            data-bs-toggle="modal"
-            data-bs-target="#add_product_attr_modal"
+            onClick={()=>navigate('/products/set-attr' ,
+              {state:{selectedProduct:rowData}})}
           ></i>
 
         <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" 
@@ -25,4 +25,24 @@ export default function Actions({rowData,handleDeleteProduct}) {
       onClick={()=>handleDeleteProduct(rowData)} ></i>
     </>
   )
+  
 }
+
+
+
+
+        const handleGetAttributes= async()=>{
+          let attrVar=[]
+            await Promise.all (
+            selectedProduct.categories.map(async (cat)=>{
+                const res=await getCategoryAttrService(cat.id)
+                if (res.status==200) {
+                    console.log(res.data.data);
+                    attrVar=[...attrVar , {groupTitle:cat.title , data:res.data.data}] 
+                }else{
+                    return {groupTitle:cat.title , data:[]}
+                }
+                    })).then(()=>{
+                        setAttrs(attrVar)
+                    })
+                }

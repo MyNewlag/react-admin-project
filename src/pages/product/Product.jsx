@@ -2,8 +2,7 @@
 
 import React from 'react'
 import TableProduct from './TableProduct'
-import AddProduct from './AddProduct'
-import SetAttribute from './SetAttribute'
+
 
 export default function Product() {
   return (

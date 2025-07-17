@@ -50,7 +50,7 @@ export default function Attributes() {
     try {
          const res=await getCategoryAttrService(location.state.categoryData.id)
     if (res.status==200) {
-        if(res.data.data.length>0){
+   if(res.data.data.length>0){
             setData(res.data.data)
         }else{
             Alert("",res.data.message,"warning")
@@ -61,7 +61,6 @@ export default function Attributes() {
     } finally{
         setLoading(false)
     }
-    
   }
 
   const handleDeleteAttr=async (rowData)=>{
@@ -99,6 +98,7 @@ export default function Attributes() {
   useEffect(()=>{
    handleGetAttr()
   },[])
+  
 
   return (   
        <>

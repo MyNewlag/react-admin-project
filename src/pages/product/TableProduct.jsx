@@ -20,13 +20,15 @@ export default function TableProduct() {
 
      const dataInfo=[
         {field:"id" , title:"#"},
-        {field:null , title:"گروه محصول " , elements: (rowData) => (
-                      <>
-                        {rowData.categories && rowData.categories.length > 0
-                          ? rowData.categories[0].title
-                          : "بدون گروه"}
-                      </>
-                        )
+        {field:null , title:"گروه محصول " , elements: (rowData) =>
+                            //  rowData.categories[0]?.title
+                              (
+                                <>
+                                  {rowData.categories && rowData.categories.length > 0
+                                    ? rowData.categories[0].title
+                                    : "بدون گروه"}
+                                </>
+                                  )
         },
         {field:"title" , title:"عنوان "},
         {field:"price" , title:"قیمت"},
