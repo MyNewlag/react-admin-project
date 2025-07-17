@@ -70,7 +70,7 @@ export default function BrandTable() {
          data={data}
          dataInfo={dataInfo}
          additionFeild={additionFeild}
-         numOfPage={6}
+         numOfPage={2}
          searchParams={searchParams}
          loading={loading}
          >

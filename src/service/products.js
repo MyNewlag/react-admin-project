@@ -17,4 +17,8 @@ export const addProductsService=(data)=>{
 
 export const editProductsService=(id,data)=>{
     return httpService(`/admin/products/${id}`,'put' ,data);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> a54064e (Set Attribute_2)

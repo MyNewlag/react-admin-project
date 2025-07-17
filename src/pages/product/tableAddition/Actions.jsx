@@ -26,6 +26,7 @@ export default function Actions({rowData,handleDeleteProduct}) {
     </>
   )
   
+<<<<<<< HEAD
 }
 
 
@@ -46,3 +47,6 @@ export default function Actions({rowData,handleDeleteProduct}) {
                         setAttrs(attrVar)
                     })
                 }
+=======
+}
+>>>>>>> a54064e (Set Attribute_2)

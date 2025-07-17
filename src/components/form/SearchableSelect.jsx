@@ -27,9 +27,15 @@ export default function SearchableSelect({resultType,options,name,label,classNam
        }
 
         const handleDeleteFromSelectItems=(e,id,formik)=>{
+<<<<<<< HEAD
         e.stopPropagation()
         setSelectItems((oldData) => {
           const newData = oldData.filter((d) => d.id != id);
+=======
+    e.stopPropagation()
+    setSelectItems((oldData) => {
+      const newData = oldData.filter((d) => d.id != id);
+>>>>>>> a54064e (Set Attribute_2)
 
           const selectedIds = newData.map((n) => n.id);
           const nameValue = resultType == "string" ? selectedIds.join("-") : selectedIds
@@ -42,6 +48,11 @@ export default function SearchableSelect({resultType,options,name,label,classNam
       useEffect(()=>{
         setSelectItems(initialItems)
       },[initialItems])
+
+        useEffect(()=>{
+        setSelectItems(initialItems)
+      },[initialItems])
+
 
         useEffect(() => {
           setCopyOptions(options)

@@ -2,11 +2,9 @@
 
 import React, { useEffect, useState } from 'react'
 import PaginatedDataTable from '../../components/PaginatedDataTable'
-import AddProduct from './AddProduct'
 import Actions from './tableAddition/Actions'
 import { deleteProductsService, getProductsService } from '../../service/products'
 import { Alert, Confirm } from '../../utils/Alert'
-import { Link } from 'react-router-dom'
 import AddButtonLink from '../../components/form/AddButtonLink'
 
 export default function TableProduct() {
@@ -14,7 +12,7 @@ export default function TableProduct() {
   const [loading,setLoading]=useState(false)
   const [searchChar,setSearchChar]=useState("")
   const [curentPage,setCurentPage]=useState(1) 
-  const [countOnPage,setCountOnPage]=useState(5)
+  const [countOnPage,setCountOnPage]=useState(2)
   const [pageCount,setPageCount]=useState(0)        //تعداد کل صفحات
 
 
@@ -43,13 +41,18 @@ export default function TableProduct() {
         const res=await deleteProductsService(rowData.id)
         if (res.status==200) {
           Alert("موفقست",`رکورد ${rowData.title} حذف شد `,"success")
-           handleGetProducts(curentPage,countOnPage,searchChar)
+          handleGetProducts(curentPage,countOnPage,searchChar)
+          if (data.length === 1 && curentPage > 1) {
+            setCurentPage(curentPage - 1)
+            }
         }
       }else{
           console.log("از حذف منصرف شدید!!!");
       }
         
     }
+console.log("A "+data.length);
+console.log("B "+curentPage);
 
 
     const searchParams={
@@ -64,11 +67,12 @@ export default function TableProduct() {
     if (res.status==200) {
       setData(res.data.data)
       setPageCount(res.data.last_page)
+ 
+ 
     }
   }
 
-        
-  
+
 
 
   const handleSearch=(char)=>{
@@ -80,6 +84,7 @@ export default function TableProduct() {
   useEffect(()=>{
     handleGetProducts(curentPage,countOnPage,searchChar)
   },[curentPage])
+
 
   return (
     

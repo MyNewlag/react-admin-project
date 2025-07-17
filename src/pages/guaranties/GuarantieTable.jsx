@@ -67,7 +67,7 @@ export default function GuarantieTable() {
         data={data}
         dataInfo={dataInfo}
         additionFeild={additionFeild}
-        numOfPage={6}
+        numOfPage={4}
        searchParams={searchParams}
         loading={loading}
         >
