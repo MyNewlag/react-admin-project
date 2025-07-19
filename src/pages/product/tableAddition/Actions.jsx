@@ -26,27 +26,4 @@ export default function Actions({rowData,handleDeleteProduct}) {
     </>
   )
   
-<<<<<<< HEAD
 }
-
-
-
-
-        const handleGetAttributes= async()=>{
-          let attrVar=[]
-            await Promise.all (
-            selectedProduct.categories.map(async (cat)=>{
-                const res=await getCategoryAttrService(cat.id)
-                if (res.status==200) {
-                    console.log(res.data.data);
-                    attrVar=[...attrVar , {groupTitle:cat.title , data:res.data.data}] 
-                }else{
-                    return {groupTitle:cat.title , data:[]}
-                }
-                    })).then(()=>{
-                        setAttrs(attrVar)
-                    })
-                }
-=======
-}
->>>>>>> a54064e (Set Attribute_2)

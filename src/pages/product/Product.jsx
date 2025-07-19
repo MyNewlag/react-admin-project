@@ -3,10 +3,6 @@
 import React from 'react'
 import TableProduct from './TableProduct'
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a54064e (Set Attribute_2)
 
 export default function Product() {
   return (

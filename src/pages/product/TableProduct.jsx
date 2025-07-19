@@ -51,9 +51,6 @@ export default function TableProduct() {
       }
         
     }
-console.log("A "+data.length);
-console.log("B "+curentPage);
-
 
     const searchParams={
     title:"جستجو",
