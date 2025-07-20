@@ -5,6 +5,10 @@ export const getProductsService=(page,countOnPage,searchChar)=>{
     return httpService(`/admin/products?page=${page}&count=${countOnPage}&searchChar=${searchChar}`,'get');
 }
 
+export const getOneProductService=(id)=>{
+    return httpService(`/admin/products/${id}`,'get');
+}
+
 export const deleteProductsService=(id)=>{
     return httpService(`/admin/products/${id}`,'delete');
 }

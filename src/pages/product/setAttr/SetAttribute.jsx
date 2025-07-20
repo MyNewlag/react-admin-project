@@ -1,22 +1,20 @@
 
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { getCategoryAttrService } from '../../../service/categoryAttr'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import PrevPageButton from '../../../components/PrevPageButton'
 import SpinnerLoad from '../../../components/SpinnerLoad'
 import SubmitBotton from '../../../components/form/SubmitBotton'
 import * as yup from "yup";
 import FormikError from '../../../components/form/FormikError'
-import { onSubmit } from './core'
+import { initializingData, onSubmit } from './core'
 
 
 export default function SetAttribute() {
 
+
     const location=useLocation()
     const {selectedProduct}=location.state 
-    console.log(selectedProduct);
-
     
     const [attrs,setAttrs]=useState()
     const [initialValues,setInitialValues]=useState(null)
@@ -51,34 +49,24 @@ export default function SetAttribute() {
         //         }
 
     const handleGetAttributes= async()=>{
-        let initials={}
-        let rules={}
-        const allAttributes=await Promise.all (
-        selectedProduct.categories.map(async (cat)=>{
-            const res=await getCategoryAttrService(cat.id)
-            if (res.status==200) {
-                if (res.data.data.length>0){
-                    for (const d of res.data.data) {
-                        const value=""
-                    initials={...initials , [d.id]:value}
-                    rules={...rules , [d.id]: yup.string().matches(/^[\u0600-\u06FF\sa-zA-Z0-9@!%-.$?&]+$/, "فقط از حروف و اعداد استفاده شود"),}
-                    } 
-                }
-                return {groupTitle:cat.title , data:res.data.data}
-            }else{
-                return {groupTitle:cat.title , data:[]}
-            }
-                }))
+        const {allAttributes,initials, rules}=  await initializingData(selectedProduct)
+
                  setAttrs(allAttributes)
                 // setInitialValues(initials)
                  setInitialValues(Object.keys(initials).length>0 ? initials :{})
                 setValidationSchema(Object.keys(initials).length>0 ? yup.object(rules) :{})
             }
-            
+
+
+ 
 
     useEffect(()=>{
       handleGetAttributes() 
+
+             
     },[])
+
+    
 
   return (
 
