@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import FormikError from './FormikError'
 import { ErrorMessage, Field } from 'formik'
 
-export default function SearchableSelect({resultType,options,name,label,className,firstItem,initialItems}) {
+export default function SearchableSelect({resultType,options,name,label
+  ,className,firstItem,initialItems}) {
 
         const [selectItems,setSelectItems]=useState([])
         const [showItems,setShowItems]=useState(false)
@@ -26,25 +27,22 @@ export default function SearchableSelect({resultType,options,name,label,classNam
           })
        }
 
-        const handleDeleteFromSelectItems=(e,id,formik)=>{
+    const handleDeleteFromSelectItems=(e,id,formik)=>{
+        e.stopPropagation()
+        setSelectItems((oldData) => {
+          const newData = oldData.filter((d) => d.id != id);
 
-    e.stopPropagation()
-    setSelectItems((oldData) => {
-      const newData = oldData.filter((d) => d.id != id);
+              const selectedIds = newData.map((n) => n.id);
+              const nameValue = resultType == "string" ? selectedIds.join("-") : selectedIds
+              formik.setFieldValue(name, nameValue);
 
-
-          const selectedIds = newData.map((n) => n.id);
-          const nameValue = resultType == "string" ? selectedIds.join("-") : selectedIds
-          formik.setFieldValue(name, nameValue);
-
-          return newData;
-        });
+              return newData;
+            });
       }
 
       useEffect(()=>{
         setSelectItems(initialItems)
       },[initialItems])
-
 
 
         useEffect(() => {
@@ -88,11 +86,12 @@ export default function SearchableSelect({resultType,options,name,label,classNam
                       onClick={(e)=>e.stopPropagation()} 
                           onChange={(e)=>setCopyOptions(options.filter(o=>o.value.includes(e.target.value)))}/>       
 
-                                <ul className="p-0">
-                                    {copyOptions.map((o) => (
-                                        <li key={o.id} className="multi_select_items pointer" onClick={()=>handleSelectItems(o.id, form)}> {o.value} </li>
-                                    ))}
-                                </ul>
+                              <ul className="p-0">
+                                  {copyOptions.map((o) => (
+                                      <li key={o.id} className="multi_select_items pointer" 
+                                      onClick={()=>handleSelectItems(o.id, form)}> {o.value} </li>
+                                  ))}
+                              </ul>
 
                 </div>
               </div>

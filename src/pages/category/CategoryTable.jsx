@@ -62,6 +62,22 @@ export default function CategoryTable() {
           {field:"title" , title:"عنوان محصول"},
           // {field:"show_in_menu" , title:"نمایش در منو"},
           {field:"parent_id" , title:"والد"},
+      {
+        field:null,
+        title:"تاریخ",
+        elements:(rowData)=> convertDateToJalali(rowData.created_at)
+        },
+      {
+        field:null,
+        title:"نمایش در منو",
+        elements:(rowData)=><ShowInMenu rowData={rowData}/>
+        },
+        {
+          field:null,
+        title:"عملیات",
+        elements:(rowData)=> <Actions rowData={rowData} 
+        handleDeleteCategory={handleDeleteCategory}/>
+      }
       ]
 
   const searchParams={
@@ -70,20 +86,6 @@ export default function CategoryTable() {
     searchField:"title"
   }
 
-    const additionFeild =[
-      {
-        title:"تاریخ",
-        elements:(rowData)=> convertDateToJalali(rowData.created_at)
-        },
-      {
-        title:"نمایش در منو",
-        elements:(rowData)=><ShowInMenu rowData={rowData}/>
-        },
-        {
-        title:"عملیات",
-        elements:(rowData)=> <Actions rowData={rowData} 
-        handleDeleteCategory={handleDeleteCategory}/>
-      }]
 
     return (
       <> 
@@ -93,7 +95,6 @@ export default function CategoryTable() {
       <PaginatedTable
       data={data}
       dataInfo={dataInfo}
-      additionFeild={additionFeild}
       numOfPage={6}
       searchParams={searchParams}
       loading={loading}

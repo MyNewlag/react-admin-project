@@ -40,15 +40,15 @@ export default function GuarantieTable() {
         {field:"title" , title:"عنوان گارانتی"},
         {field:"descriptions" , title:"توضیحات"},
         {field:"length" , title:"مدت گارانتی "},
-    ]
-
-    const additionFeild=[
-    {title:"عملیات",
+        {
+        field:null,
+        title:"عملیات",
         elements:(rowData)=><Actions rowData={rowData}
          handleDeleteGuarantie={handleDeleteGuarantie} 
          setEditGuarantie={setEditGuarantie}/>
         }
     ]
+
 
     const searchParams={
      title:"جستجو",
@@ -66,7 +66,6 @@ export default function GuarantieTable() {
         <PaginatedTable
         data={data}
         dataInfo={dataInfo}
-        additionFeild={additionFeild}
         numOfPage={4}
        searchParams={searchParams}
         loading={loading}

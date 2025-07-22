@@ -17,21 +17,23 @@ export default function ColorTable() {
         {field:"id" , title:"#"},
         {field:"title" , title:"عنوان"},
         {field:"code" , title:"کد رنگ"},
-    ]
-
-    const additionFeild =[
-      {
+        {field:null,
         title:"رنگ",
           elements:(rowData)=><div className='w-100 h-100 d-block' 
           style={{background:rowData.code , color: rowData.code}}>...</div>
         },
       {
+        field:null,
         title:"عملیات",
          elements:(rowData)=><Actions rowData={rowData} 
          setEditColor={setEditColor} 
          handleDeleteColor={handleDeleteColor}
          />
-        }
+        },
+    ]
+
+    const additionFeild =[
+
       ]
 
       const handleDeleteColor=async(rowData)=>{

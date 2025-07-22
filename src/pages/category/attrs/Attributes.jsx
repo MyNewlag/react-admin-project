@@ -24,20 +24,19 @@ export default function Attributes() {
     {field:"id" , title:"#"},
     {field:"title" , title:"عنوان محصول"},
     {field:"unit" , title:"واحد"},
+    {field:null ,
+    title:"نمابش در فیلتر",
+     elements:(rowData)=><ShowInFilter rowData={rowData}/>
+    },
+     {
+    field:null ,
+    title:"عملیات",
+    elements:(rowData)=><AttAction rowData={rowData}
+    editAttribute={editAttribute} setEditAttribute={setEditAttribute}
+    handleDeleteAttr={handleDeleteAttr}/>
+    }
       ]
 
-    const additionFeild =[    
-        {
-            title:"نمابش در فیلتر",
-            elements:(rowData)=><ShowInFilter rowData={rowData}/>
-            },
-            {
-            title:"عملیات",
-                elements:(rowData)=><AttAction rowData={rowData}
-                editAttribute={editAttribute} setEditAttribute={setEditAttribute}
-                handleDeleteAttr={handleDeleteAttr}/>
-        }]
-        
         
   const searchParams={
     title:"سرچ",
@@ -126,7 +125,6 @@ export default function Attributes() {
                   <PaginatedTable
                       data={data}
                       dataInfo={dataInfo}
-                      additionFeild={additionFeild}
                       numOfPage={4}
                       searchParams={searchParams}
                       loading={loading}

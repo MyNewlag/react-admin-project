@@ -10,18 +10,18 @@ import { Alert, Confirm } from '../../utils/Alert';
 export default function BrandTable() {
 
     const [data ,setData]=useState([]);
-    const [loading ,setloading]=useState(false);
+    const [loading ,setLoading]=useState(false);
     const [brandToEdit ,setBrandToEdit]=useState(null);
 
+    const handleGetAllBrands = async ()=>{
+        setLoading(true)
+        const res = await getAllBrandsService()
 
-    const handleGetAllBrands= async()=>{
-      setloading(true)
-         const res= await getAllBrandsService()
-         res && setloading(false)
-         if(res.status==200){
-           setData(res.data.data)    
+        res && setLoading(false) // اگر رس مقدار داشت لودینگ فالس شود
+        if(res.status === 200 ) {
+            setData(res.data.data)
         }
-      }
+    }
     
     const handleDeleteBrand=async(rowData)=>{
       if (await Confirm("حذف برند",`آیا از حذف برند ${rowData.original_name} اطمینان دارید؟`)){
@@ -34,24 +34,24 @@ export default function BrandTable() {
     }
 
 
-        const dataInfo=[
-        {field:"id" , title:"#"},
-        {field:"original_name" , title:"عنوان لاتین"},
-        {field:"persian_name" , title:"عنوان فارسی"},
-        {field:"descriptions" , title:"توضیحات"},
+       const dataInfo = [
+        {field: 'id' , title: '#'},
+        {field: 'original_name' , title: 'عنوان'},
+        {field: 'persian_name' , title: 'عنوان فارسی'},
+        {field: 'descriptions' , title: 'توضیحات'},
+        {
+          field: null,
+          title: "لوگو",
+          elements: (rowData) =>
+            rowData.logo ? <img src={apiPath+"/"+rowData.logo} width="40" /> : null,
+        },
+        {
+          field: null,
+          title: "عملیات",
+          elements: (rowData) => <Actions rowData={rowData} setBrandToEdit={setBrandToEdit} handleDeleteBrand={handleDeleteBrand} />,
+        }
     ]
 
-    const additionFeild =[
-        {
-            title:"لوگو",
-            elements:(rowData)=>
-              rowData.logo ? <img src={apiPath+"/"+rowData.logo} width="40"/> : null
-            },
-            {
-            title:"عملیات",
-            elements:(rowData)=><Actions rowData={rowData}
-             setBrandToEdit={setBrandToEdit} handleDeleteBrand={handleDeleteBrand}/>
-        }]
 
     const searchParams={
     title:"جستجو",
@@ -69,7 +69,6 @@ export default function BrandTable() {
      <PaginatedTable
          data={data}
          dataInfo={dataInfo}
-         additionFeild={additionFeild}
          numOfPage={2}
          searchParams={searchParams}
          loading={loading}

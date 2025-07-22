@@ -8,6 +8,7 @@ import File from './File'
 import Switch from './Switch'
 import MultiSelect from './MultiSelect'
 import SearchableSelect from './SearchableSelect'
+import Date from './Date'
 
 export default function FormikControl(props) {
     switch (props.control) {
@@ -31,6 +32,9 @@ export default function FormikControl(props) {
 
         case 'switch':
             return <Switch {...props}/>
+
+        case 'date':
+            return <Date {...props}/>
 
         default:
             return null

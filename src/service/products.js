@@ -1,26 +1,37 @@
 import { convertDataToFormdata } from "../utils/convertData";
-import httpService from "./httpService"
+import httpService from "./httpService";
 
-export const getProductsService=(page,countOnPage,searchChar)=>{
-    return httpService(`/admin/products?page=${page}&count=${countOnPage}&searchChar=${searchChar}`,'get');
-}
+export const getProductsService = (page, countOnPage, searchChar) => {
+  return httpService(
+    `/admin/products?page=${page}&count=${countOnPage}&searchChar=${searchChar}`,
+    "get"
+  );
+};
 
-export const getOneProductService=(id)=>{
-    return httpService(`/admin/products/${id}`,'get');
-}
+export const getOneProductService = (id) => {
+  return httpService(`/admin/products/${id}`, "get");
+};
 
-export const deleteProductsService=(id)=>{
-    return httpService(`/admin/products/${id}`,'delete');
-}
+export const deleteProductsService = (id) => {
+  return httpService(`/admin/products/${id}`, "delete");
+};
 
+export const addProductsService = (data) => {
+  return httpService(
+    `/admin/products`,
+    "post",
+    data.image ? convertDataToFormdata(data) : data
+  );
+};
 
-export const addProductsService=(data)=>{
-    return httpService(`/admin/products`,'post' , data.image ? convertDataToFormdata(data) : data);
-}
+export const editProductsService = (id, data) => {
+  return httpService(`/admin/products/${id}`, "put", data);
+};
 
+export const addProductsAttributeService = (id, data) => {
+  return httpService(`/admin/products/${id}/add_attr`, "post", data);
+};
 
-export const editProductsService=(id,data)=>{
-    return httpService(`/admin/products/${id}`,'put' ,data)}
-
-export const addProductsAttributeService=(id,data)=>{
-    return httpService(`/admin/products/${id}/add_attr`,'post' ,data)}
+export const addProductImage = (id, data) => {
+  return httpService(`/admin/products/${id}/add_image`, "post", data);
+};

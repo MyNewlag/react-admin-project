@@ -78,13 +78,13 @@ export default function AddBrands({setData,brandToEdit,setBrandToEdit}) {
                 placeholder="متن کوتاه در مورد برند"
                 />
 
-                {
-                  brandToEdit ?(
-                    <div className='btn_box text-center col-12 py-3'>
-                      <img src={apiPath+"/"+brandToEdit.logo} width="60"/>
-                    </div>
-                  ): null
-                }
+              {
+                  brandToEdit ? (
+                      <div className="btn_box text-center col-12 py-3">
+                          <img src={apiPath+"/"+brandToEdit.logo} width="60" />
+                      </div>
+                  ) : null
+              }
 
                 <FormikControl
                 control="file"
