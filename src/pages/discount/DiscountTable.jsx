@@ -12,6 +12,8 @@ import { Alert, Confirm } from '../../utils/Alert';
 
 export default function DiscountTable() {
 
+
+  
     const [data,setData]=useState([])
     const [loading,setLoading]=useState(false)
     const [codeToEdit, setCodeToEdit] = useState(null)
@@ -39,12 +41,24 @@ export default function DiscountTable() {
     {
       field: null,
       title: "عملیات",
-      elements: (rowData) => <Actions rowData={rowData} />,
+      elements: (rowData) => <Actions rowData={rowData} deleteDiscount={deleteDiscount}/>,
     },
   ];
 
 
+  const updateDiscount=async(rowData)=>{
+  
+  }
 
+  const deleteDiscount=async(rowData)=>{
+    if (await Confirm("حذف تخفیف !!!",`آیا از حذف تخفیف  ${rowData.title} اطمینان دارید؟`)) {
+     const res=await deleteDiscountServic(rowData.id)
+      if (res.status==200) {
+        Alert("موفقیت",res.data.message,"success")
+        setData(data.filter(d=>d.id!=rowData.id))
+      }      
+    }
+  }
 
     const handleGetAllDiscouny=async()=>{
         setLoading(true)

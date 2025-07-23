@@ -1,15 +1,37 @@
 
 import * as yup from "yup";
-import { addDiscountServic } from "../../service/discounts";
+import { addDiscountServic, updateDiscountServic } from "../../service/discounts";
 import { Alert } from "../../utils/Alert";
 import { convertDateToMoladi } from "../../utils/convertDate";
 import jMoment from 'jalali-moment';
 
 
 
-export const onSubmit = async (values, actions) => {
+export const onSubmit = async (values, actions,setData,discontToEdit) => {
+    values={...values ,
+        expire_at:convertDateToMoladi(values.expire_at)
+        }
 
-};
+        if (discontToEdit) {
+          const res= await updateDiscountServic(discontToEdit.id,values)
+            if (res.status==200) {
+                Alert("موفقیت", res.data.message,"success")
+                setData(old=>{
+                    let newData=[...old]
+                    let index = newData.findIndex(a=>a.id==discontToEdit.id)
+                    newData[index]=res.data.data
+                    return newData
+                })
+            }
+        }else{
+            const res=await addDiscountServic(values)
+            if ( res.status==201) {
+                Alert("موفقیت", res.data.message,"success")
+        
+                setData(old=>[...old , res.data.data])
+            }
+        }
+    }
 
 
 export const initialValues={

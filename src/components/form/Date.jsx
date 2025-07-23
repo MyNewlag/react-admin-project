@@ -19,7 +19,7 @@ const months = [
     {id: 12 , value: "اسفند"},
 ]
 
-export default function Date({formik,name,label,yearsLimit}) {
+export default function Date({formik,name,label,yearsLimit,initialDate}) {
 
     const [day , setDay] = useState();
     const [month , setMonth] = useState();
@@ -29,7 +29,7 @@ export default function Date({formik,name,label,yearsLimit}) {
     
 
     useEffect(()=>{
-        let now = jMoment();
+        let now = jMoment(initialDate);
         setDay(now.jDate());
         setMonth(now.jMonth()+1);
         setYear(now.jYear());
