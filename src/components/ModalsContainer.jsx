@@ -2,7 +2,8 @@
 import React from 'react'
 import { createPortal } from 'react-dom'
 
-export default function ModalsContainer({children,id,fullScreen,title,className,closeFunction}) {
+export default function ModalsContainer({children,id,fullScreen,title
+  ,className,closeFunction}) {
 
   return createPortal(
        <div

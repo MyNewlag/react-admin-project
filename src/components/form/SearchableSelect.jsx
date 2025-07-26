@@ -60,8 +60,7 @@ export default function SearchableSelect({resultType,options,name,label
   return (
       <Field>
         {({form})=>{
-          // console.log(form);
-          
+
           return(
             <div className={`col-12 ${className}`}>
               <div className='input-group mb-3 dir_ltr pointer ' 

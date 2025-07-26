@@ -23,6 +23,7 @@ import AddProduct from './product/AddProduct';
 import SetAttribute from './product/setAttr/SetAttribute';
 import ProductGallery from './product/gallery/ProductGallery';
 import AddDiscount from './discount/AddDiscount';
+import AddRoles from './roles/AddRoles';
 
 export default function Content() {
 
@@ -46,15 +47,21 @@ export default function Content() {
               <Route path='/colors' element={<Colors/>}/>
               <Route path='/guaranties' element={<Guaranties/>}/>
               <Route path='/brands' element={<Brands/>}/>
+
               <Route path='/discounts' element={<Discounts/>}>
-                {/* <Route path='/discounts/add-discount-code' element={<AddDiscount/>}/> */}
-                <Route path=':add-discount-code' element={<AddDiscount/>}/>
+                <Route path='/discounts/add-discount-code' element={<AddDiscount/>}/>
+                {/* <Route path=':add-discount-code' element={<AddDiscount/>}/> */}
               </Route>
+              
               <Route path='/cards' element={<Cards/>}/>
               <Route path='/orders' element={<Orders/>}/>
               <Route path='/delivery' element={<Delivery/>}/>
               <Route path='/users' element={<Users/>}/>
-              <Route path='/roles' element={<Roles/>}/>
+
+              <Route path='/roles' element={<Roles/>}>
+                <Route path=':add-role' element={<AddRoles/>}/>
+              </Route>
+
               <Route path='/permissions' element={<Permissions/>}/>
               <Route path='/questions' element={<Questions/>}/>
               <Route path='/comments' element={<Comments/>}/>

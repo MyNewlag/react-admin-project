@@ -1,70 +1,129 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ModalsContainer from '../../components/ModalsContainer'
+import { useLocation, useNavigate, useOutletContext } from 'react-router-dom'
+import FormikControl from '../../components/form/FormikControl'
+import { Form, Formik } from 'formik'
+import SubmitBotton from '../../components/form/SubmitBotton'
+import { initialValues, onSubmit, validationSchema } from './core'
+import { getAllPermissionsService, getSingleRoleService } from '../../service/users'
+
 
 export default function AddRoles() {
+    
+    const [permission , setPermission]=useState([])
+    const [roleToEdit , setRoleToEdit]=useState(null)
+    const [reinitilValue , setReinitilValue]=useState(null)
+
+    const navigate = useNavigate()
+
+    const location=useLocation()
+    const roleIdToEdit=location.state?.roleToEdit
+    const editType=location.state?.editType
+    
+
+    const {setData}=useOutletContext()
+// console.log(reinitilValue.permissions);
+
+    
+
+    const hanldleGetAllPermissions=async()=>{
+            const res=await getAllPermissionsService()
+            if (res.status==200) {
+                setPermission(res.data.data.map(d=>{return{id:d.id , title:d.description}}))
+            }
+     }
+
+    const hanldleGetSinglePermission=async()=>{
+            const res=await getSingleRoleService(roleIdToEdit)
+            if (res.status==200) {
+              const rol=res.data.data
+             setRoleToEdit(rol)
+            
+             editType=="role" ? 
+             setReinitilValue({title:rol.title ,
+              description:rol.description }) :
+               setReinitilValue({permissions_id:rol.permissions.map(p=>""+p.id)
+                ,editPermissions:true
+               })
+            }
+          }
+
+  
+
+    useEffect(()=>{
+       editType!="role" && hanldleGetAllPermissions()
+       roleIdToEdit && hanldleGetSinglePermission()
+    },[])
+
   return (
     <>
 
-         <button className="btn btn-success d-flex justify-content-center align-items-center" 
-         data-bs-toggle="modal" data-bs-target="#add_role_modal">
-           <i className="fas fa-plus text-light"></i>
-        </button>
-
         <ModalsContainer
-        fullScreen={false}
-        id="add_role_modal"
-        title="افزورن تخفیف جدید"
+             className="show d-block"
+            id={"add_discount_modal"}
+            title={editType=="role" ? "ویرایش نقش" : 
+              editType=="permissions" ? "ویرایش مجوزهای :" +roleToEdit?.title:
+               "افزودن نقش کاربر"}
+            fullScreen={editType=="role" ? false : true}
+            closeFunction={()=>navigate(-1)}
         >
               <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-12">
-                            <div className="input-group my-3 dir_ltr">
-                                <input type="text" className="form-control" placeholder=""/>
-                                <span className="input-group-text w_8rem justify-content-center">عنوان نقش</span>
-                            </div>
-                        </div>
-                        <div className="col-12">
-                            <div className="input-group my-3 dir_ltr;">
-                                <input type="text" className="form-control" placeholder=""/>
-                                <span className="input-group-text w_8rem justify-content-center">توضیحات نقش</span>
-                            </div>
-                        </div>                        
-                        <div className="col-12 my-1 mb-3">
-                            <div className="input-group my-2 dir_ltr">
-                                <input type="text" className="form-control" placeholder="قسمتی از مجوز مورد نظر را وارد کنید" list="permissionsList"/>
-                                <span className="input-group-text w_8rem justify-content-center">دسترسی ها</span>
-                                <datalist id="permissionsList">
-                                    <option value="مجوز شماره 1"/>
-                                    <option value="مجوز شماره 2"/>
-                                    <option value="مجوز شماره 3"/>
-                                </datalist>
-                            </div>
-                            <div className="col-12 col-md-6 col-lg-8">
-                                <span className="chips_elem">
-                                    <i className="fas fa-times text-danger"></i>
-                                    مجوز 1
-                                </span>
-                                <span className="chips_elem">
-                                    <i className="fas fa-times text-danger"></i>
-                                    مجوز 2
-                                </span>
-                            </div>
-                        </div> 
+
+                <Formik
+                initialValues={reinitilValue || initialValues}
+                onSubmit={(values,action)=>onSubmit(values,action,setData,roleIdToEdit,editType)}
+                validationSchema={validationSchema}
+                enableReinitialize
+                >
+                    <Form>
+                   <div className="row justify-content-center">
+
+                    {
+                      editType!="permissions" ?(
+                        <>
+                        
+                        <FormikControl
+                          className={editType=="role" ? "" :"col-md-8"}
+                          control="input"
+                          type="text"
+                          name="title"
+                          label="عنوان نقش "
+                          placeholder="فقط از حروف فارسی استفاده کنید"
+                          />
+                          
+                  
+                        <FormikControl
+                          className={editType=="role" ? "" :"col-md-8"}
+                          control="textarea"
+                          name="description"
+                          label="توضیحات نقش "
+                          placeholder="فقط از حروف فارسی استفاده کنید"
+                          />
+                        </>
+                      ): null
+                    }
 
 
-                        <div className="col-12 my-2">
-                            <div className="form-check form-switch col-5 col-md-4">
-                                <input className="form-check-input pointer" type="checkbox" id="flexSwitchCheckDefault" checked onChange={()=>{}}/>
-                                <label className="form-check-label pointer" htmlFor="flexSwitchCheckDefault">وضعیت : فعال</label>
-                            </div>
-                        </div>
+                        {
+                          editType!="role"  ?(
+                            <FormikControl
+                              className="col-md-8"
+                              control="checkBox"
+                              name="permissions_id"
+                              label="دسترسی ها"
+                              options={permission}
+                              />
+                  
+                          ):null
+                        }
 
-                      
                         <div className="btn_box text-center col-12 col-md-6 col-lg-8 mt-4">
-                            <button className="btn btn-primary ">ذخیره</button>
+                            <SubmitBotton/>
                         </div>
                     </div>
+                    </Form>
+                </Formik>
             </div>
         </ModalsContainer>
     </>

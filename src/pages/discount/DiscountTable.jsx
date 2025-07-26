@@ -12,11 +12,8 @@ import { Alert, Confirm } from '../../utils/Alert';
 
 export default function DiscountTable() {
 
-
-  
     const [data,setData]=useState([])
     const [loading,setLoading]=useState(false)
-    const [codeToEdit, setCodeToEdit] = useState(null)
 
   const dataInfo = [
     { field: "id", title: "#" },
@@ -46,9 +43,6 @@ export default function DiscountTable() {
   ];
 
 
-  const updateDiscount=async(rowData)=>{
-  
-  }
 
   const deleteDiscount=async(rowData)=>{
     if (await Confirm("حذف تخفیف !!!",`آیا از حذف تخفیف  ${rowData.title} اطمینان دارید؟`)) {

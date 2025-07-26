@@ -20,7 +20,7 @@ export default function AddDiscount() {
       const [selectedProducts, setSelectedProducts]=useState([])
       const [reInitialValues, setReInitialValues]=useState(null)
       
-    const {setData}=useOutletContext()
+      const {setData}=useOutletContext()
 
     const handleGetAllProductTitle=async()=>{
         const res=await getAllProductTitletServic()
@@ -29,24 +29,23 @@ export default function AddDiscount() {
         }
     }
 
-
     const handleSetProductSelectBox=(formik)=>{
         const idsArr=formik.values.product_ids.split("-").filter(id=>id)
         const selectedProductArr=idsArr.map(id=>allProducts.filter(p=>p.id==id)[0]).filter(product=>product)
         
-    return(
-           <FormikControl
-        className="animate__animated animate__shakeX"
-        label="برای"
-        control="searchableSelect"
-        options={allProducts}
-        name="product_ids"
-        firstItem="محصول مورد نظر را انتخاب کنبد..."
-        resultType="string"
-        initialItems={selectedProductArr.length>0 ? selectedProductArr: selectedProducts}
-        />
-    )
-    }
+            return(
+                <FormikControl
+                className="animate__animated animate__shakeX"
+                label="برای"
+                control="searchableSelect"
+                options={allProducts}
+                name="product_ids"
+                firstItem="محصول مورد نظر را انتخاب کنبد..."
+                resultType="string"
+                initialItems={selectedProductArr.length>0 ? selectedProductArr: selectedProducts}
+                />
+            )
+        }
 
     useEffect(()=>{
         handleGetAllProductTitle()
@@ -67,7 +66,7 @@ export default function AddDiscount() {
 
     <>
         <ModalsContainer
-        className="show d-block"
+         className="show d-block"
             id={"add_discount_modal"}
             title={discountToEdit ? "ویرایش کد تخفیف" : "افزودن کد تخفیف"}
             fullScreen={false}

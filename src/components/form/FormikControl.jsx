@@ -9,6 +9,7 @@ import Switch from './Switch'
 import MultiSelect from './MultiSelect'
 import SearchableSelect from './SearchableSelect'
 import Date from './Date'
+import CheckBox from './CheckBox'
 
 export default function FormikControl(props) {
     switch (props.control) {
@@ -35,6 +36,9 @@ export default function FormikControl(props) {
 
         case 'date':
             return <Date {...props}/>
+ 
+            case 'checkBox':
+            return <CheckBox {...props}/>
 
         default:
             return null

@@ -26,7 +26,7 @@ export default function Date({formik,name,label,yearsLimit,initialDate}) {
     const [year , setYear] = useState();
     const [years , setYears] = useState([])
     const [showConfig , setShowConfig] = useState(false)
-    
+
 
     useEffect(()=>{
         let now = jMoment(initialDate);
@@ -53,14 +53,14 @@ export default function Date({formik,name,label,yearsLimit,initialDate}) {
         })
         setShowConfig(false)        
     }
-
-
+    
 
     return (
         <div className={`wrap-input100 validate-input form_date_picker`} >
 
             <div className="input-group mb-3 dir_ltr pointer" onClick={handleShowDateConfig}>
-                <FastField type="text" name={name} className="form-control pointer" placeholder={'جهت انتخاب تاریخ کلیک کنید'} disabled/>
+                <FastField type="text" name={name} className="form-control pointer"
+                 placeholder={'جهت انتخاب تاریخ کلیک کنید'} disabled/>
                 <span className="input-group-text w_6rem justify-content-center"> {label} </span>
             </div>
             

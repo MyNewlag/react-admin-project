@@ -66,7 +66,7 @@ export default function GuarantieTable() {
         <PaginatedTable
         data={data}
         dataInfo={dataInfo}
-        numOfPage={4}
+        numOfPage={3}
        searchParams={searchParams}
         loading={loading}
         >

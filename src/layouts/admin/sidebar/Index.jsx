@@ -12,12 +12,12 @@ export default function Index() {
     
   return (
         <section id="sidebar_section">
-        <div className={`mini_sidebar collapsedd bg-dark h-100 ${showSidebar?"expanded":""}`}>
-            <ul className="p-0 m-0">
+          <div className={`mini_sidebar collapsedd bg-dark h-100 ${showSidebar?"expanded":""}`}>
+            <div className="p-0 m-0">
 
                 <Avatar
                 imgSrc="/assets/images/avatar/user2.jpg"
-                name="قاسم بساکی"
+                name="محمد محمدی"
                 />
 
                    <SidebarItem
@@ -25,6 +25,9 @@ export default function Index() {
                    icon="fas fa-tachometer-alt"
                    title="داشبورد"
                    />
+
+               <div className='sidebar_items_container'>
+
        
                     <SidebarGropTitle
                         title="فروشگاه"
@@ -40,8 +43,8 @@ export default function Index() {
         
                   <SidebarItem
                    targetPath={"/products"}
-                    icon="fas fa-cube"
-                    title="مدیریت محصول"
+                   icon="fas fa-cube"
+                   title="مدیریت محصول"
                   />
 
             
@@ -56,8 +59,8 @@ export default function Index() {
 
                  <SidebarItem
                  targetPath={"/guaranties"}
-                    icon="fab fa-pagelines"
-                    title="مدیریت گارانتی ها"
+                 icon="fab fa-pagelines"
+                 title="مدیریت گارانتی ها"
                   />
                 
               
@@ -66,7 +69,7 @@ export default function Index() {
                     targetPath={"/colors"}
                     icon="fas fa-palette"
                     title="مدیریت رنگ ها"
-                  />
+                    />
 
                 
                     <SidebarItem
@@ -82,79 +85,80 @@ export default function Index() {
 
                  <SidebarItem
                  targetPath={"/cards"}
-                    icon="fas fa-shopping-basket"
-                    title="مدیریت سبد ها"
+                 icon="fas fa-shopping-basket"
+                 title="مدیریت سبد ها"
                   />  
                 
 
                  <SidebarItem
                  targetPath={"/orders"}
-                    icon="fas fa-luggage-cart"
-                    title="مدیریت سفارشات "
+                 icon="fas fa-luggage-cart"
+                 title="مدیریت سفارشات "
                   /> 
              
                 <SidebarItem
                 targetPath={"/delivery"}
-                    icon="fas fa-truck-loading"
-                    title="مدیریت نحوه ارسال "
+                icon="fas fa-truck-loading"
+                title="مدیریت نحوه ارسال "
                   />                
                   
                    <SidebarGropTitle
                     title="کاربران و همکاران"
-                />
+                    />
 
 
                
                 <SidebarItem
                 targetPath={"/users"}
-                    icon="fas fa-users"
-                    title="مشاهده کاربران "
-                  /> 
+                icon="fas fa-users"
+                title="مشاهده کاربران "
+                /> 
 
               
 
                   <SidebarItem
                   targetPath={"/roles"}
-                    icon="fas fa-user-tag"
-                    title=" نقش ها "
+                  icon="fas fa-user-tag"
+                  title=" نقش ها "
                   />
               
 
                       <SidebarItem
                       targetPath={"/permissions"}
-                    icon="fas fa-shield-alt"
-                    title=" مجوز ها "
-                  />
+                      icon="fas fa-shield-alt"
+                      title=" مجوز ها "
+                      />
 
 
                   <SidebarGropTitle
                     title="ارتباطات"
-                />
+                    />
                 
                   <SidebarItem
                   targetPath={"/questions"}
-                    icon="fas fa-question-circle"
-                    title="سوال ها "
+                  icon="fas fa-question-circle"
+                  title="سوال ها "
                   />
                
 
                   <SidebarItem
                   targetPath={"/comments"}
-                    icon="fas fa-comment"
-                    title=" نظرات "
+                  icon="fas fa-comment"
+                  title=" نظرات "
                   />
-                {/* <!-- <li className="py-2 btn-group dropstart pe-4"/>
+                 {/* <!-- <li className="py-2 btn-group dropstart pe-4"/>
                     <i className="ms-3 icon fas fa-check text-light"></i>
                     <span className="hiddenable" data-bs-toggle="dropdown" aria-expanded="false">داشبورد</span>
                     
                     <ul className="dropdown-menu px-2 sidebar_submenu_list">
-                      <li className="d-none">اول</li>
-                      <li>اول</li>
-                      <li>دوم</li>
-                      <li>سوم</li>
+                    <li className="d-none">اول</li>
+                    <li>اول</li>
+                    <li>دوم</li>
+                    <li>سوم</li>
                     </ul>
-                </li> --> */}
-            </ul>
+                    </li> --> */}
+               </div>
+            </div>
         </div>
     </section>
   )

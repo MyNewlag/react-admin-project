@@ -6,7 +6,6 @@ import SpinnerLoad from './SpinnerLoad'
 
 export default function PaginatedTable({data,dataInfo,children,
   numOfPage,searchParams,loading}) {
-// console.log(data);
 
   
 const [itemInPage,setItemInPage]=useState(numOfPage)
