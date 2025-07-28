@@ -24,6 +24,7 @@ import SetAttribute from './product/setAttr/SetAttribute';
 import ProductGallery from './product/gallery/ProductGallery';
 import AddDiscount from './discount/AddDiscount';
 import AddRoles from './roles/AddRoles';
+import AddUser from './users/AddUser';
 
 export default function Content() {
 
@@ -56,7 +57,10 @@ export default function Content() {
               <Route path='/cards' element={<Cards/>}/>
               <Route path='/orders' element={<Orders/>}/>
               <Route path='/delivery' element={<Delivery/>}/>
-              <Route path='/users' element={<Users/>}/>
+
+              <Route path='/users' element={<Users/>}>
+                <Route path=':add-user' element={<AddUser/>}/>
+              </Route>
 
               <Route path='/roles' element={<Roles/>}>
                 <Route path=':add-role' element={<AddRoles/>}/>

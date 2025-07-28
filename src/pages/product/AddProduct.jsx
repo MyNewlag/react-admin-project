@@ -99,22 +99,6 @@ export default function AddProduct() {
             rowData.guarantees.map(g=>{
               return {id:g.id , value:g.title}
             }))
-
-          setSelectedCategories(
-          rowData.categories.map(c=>{
-            return {id:c.id , value:c.title}
-          }))
-
-          setSelectedColors(
-            rowData.colors.map(c=>{
-              return{id:c.id , value:c.title}
-            }))
-
-            setSelectedGuarantees(
-              rowData.guarantees.map(g=>{
-                return {id:g.id , value:g.title}
-              }))
-
       }
     }
 

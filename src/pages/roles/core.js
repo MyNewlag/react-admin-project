@@ -43,14 +43,14 @@ export const initialValues ={
 export const validationSchema=  yup.object({
     title: yup.string().when('editPermissions',{
         is:true,
-        then:null,
+        then:()=>null,
         otherwise:()=>yup.string().required("لطفا این قسمت را پر کنید")
         .matches(/^[\u0600-\u06FF\sa-zA-Z0-9@!%-.$?&]+$/, "فقط از حروف و اعداد استفاده شود"),
     }),
        
     description:  yup.string().when('editPermissions',{
         is:true,
-        then:null,
+        then:()=>null,
         otherwise:()=>yup.string().required("لطفا این قسمت را پر کنید")
         .matches(/^[\u0600-\u06FF\sa-zA-Z0-9@!%-.$?&]+$/, "فقط از حروف و اعداد استفاده شود"),
     }),

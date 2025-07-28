@@ -2,13 +2,13 @@
 import * as yup from "yup";
 import { addDiscountServic, updateDiscountServic } from "../../service/discounts";
 import { Alert } from "../../utils/Alert";
-import { convertDateToMoladi } from "../../utils/convertDate";
+import { convertDateToMiladi } from "../../utils/convertDate";
 
 
 
 export const onSubmit = async (values, actions,setData,discontToEdit) => {
     values={...values ,
-        expire_at:convertDateToMoladi(values.expire_at)
+        expire_at:convertDateToMiladi(values.expire_at)
         }
 
         if (discontToEdit) {

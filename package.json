@@ -17,7 +17,9 @@
     "jalali-moment": "^3.3.11",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.0",
+    "redux": "^5.0.1",
     "sweetalert": "^2.1.2",
     "yup": "^1.6.1"
   },

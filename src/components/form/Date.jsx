@@ -19,7 +19,7 @@ const months = [
     {id: 12 , value: "اسفند"},
 ]
 
-export default function Date({formik,name,label,yearsLimit,initialDate}) {
+export default function Date({formik,name,label,yearsLimit,initialDate,className}) {
 
     const [day , setDay] = useState();
     const [month , setMonth] = useState();
@@ -33,7 +33,7 @@ export default function Date({formik,name,label,yearsLimit,initialDate}) {
         setDay(now.jDate());
         setMonth(now.jMonth()+1);
         setYear(now.jYear());
-    } , [])
+    },[])
 
     const handleShowDateConfig = ()=>{
         for (let index = parseInt(year)- (yearsLimit?.from || 100); 
@@ -54,16 +54,14 @@ export default function Date({formik,name,label,yearsLimit,initialDate}) {
         setShowConfig(false)        
     }
     
-
     return (
-        <div className={`wrap-input100 validate-input form_date_picker`} >
+        <div className={`validate-input form_date_picker ${className}`} >
 
             <div className="input-group mb-3 dir_ltr pointer" onClick={handleShowDateConfig}>
                 <FastField type="text" name={name} className="form-control pointer"
                  placeholder={'جهت انتخاب تاریخ کلیک کنید'} disabled/>
                 <span className="input-group-text w_6rem justify-content-center"> {label} </span>
             </div>
-            
             {
                 showConfig ? (
                     <div className='datePicker row w-100 m-0 p-0'>
