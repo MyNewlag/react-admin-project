@@ -5,7 +5,7 @@ import { Alert } from "../../utils/Alert";
 import { convertDateToMiladi } from "../../utils/convertDate";
 
 export const onSubmit =async (values,action,setData,userId)=>{
-    console.log(values);
+    // console.log(values);
      values={...values ,
             birth_date:values.birth_date ? convertDateToMiladi(values.birth_date) : null
             }

@@ -3,12 +3,15 @@ import { AdminContext } from '../../../context/AdminLayoutContext';
 import Avatar from './Avatar';
 import SidebarGropTitle from './SidebarGropTitle';
 import SidebarItem from './SidebarItem';
+import { useSelector } from 'react-redux';
 
 
 
 export default function Index() {
 
+    const user=useSelector(state=>state.userReducer.data)
     const {showSidebar}=useContext(AdminContext);
+
     
   return (
         <section id="sidebar_section">
@@ -16,10 +19,10 @@ export default function Index() {
             <div className="p-0 m-0">
 
                 <Avatar
-                imgSrc="/assets/images/avatar/user2.jpg"
-                name="محمد محمدی"
+                imgSrc={user.image || "/assets/images/user.png"}
+                name={user.full_name || user.user_name}
                 />
-
+                
                    <SidebarItem
                    targetPath={"/"}
                    icon="fas fa-tachometer-alt"
