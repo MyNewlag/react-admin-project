@@ -16,7 +16,7 @@ export default function UsersTable() {
     const [loading , setLoading]=useState(false)
     const [searchChar,setSearchChar]=useState("")
     const [curentPage,setCurentPage]=useState(1) 
-    const [countOnPage,setCountOnPage]=useState(2)
+    const [countOnPage,setCountOnPage]=useState(4)
     const [pageCount,setPageCount]=useState(0)        //تعداد کل صفحات
 
 

@@ -28,7 +28,6 @@ export default function CategoryTable() {
       //   Alert("خطا",res.data.message,"error")
       // }
     } catch (error) {
-      console.log(error.message);
     } finally{
       setloading(false)
     }

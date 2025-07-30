@@ -25,126 +25,88 @@ import ProductGallery from './product/gallery/ProductGallery';
 import AddDiscount from './discount/AddDiscount';
 import AddRoles from './roles/AddRoles';
 import AddUser from './users/AddUser';
-import { useSelector } from 'react-redux';
+import PermComponent from '../components/PermComponent';
+import { useHasPermission } from './../hook/permissionsHook';
 
 export default function Content() {
 
  const {showSidebar}=useContext(AdminContext);
-
- const user=useSelector(state=>state.userReducer.data)
- const roles = user.roles
-
- const hasPermissions=(permission)=>{
-    return permissions.findIndex(p=>p.title.includes(permission)) > -1
- }
  
- let permissions =[]
- for (const role of roles){
-  permissions = [...permissions,...role.permissions]
- }
- 
- console.log(permissions);
+ const hasCategoryPermission = useHasPermission("read_categories")
+ const hasDiscountPermission = useHasPermission("read_discounts")
+ const hasUserPermission = useHasPermission("read_users")
+ const hasRolePermission = useHasPermission("read_roles")
  
  
   return (
-         <section id="content_section"
-          className={`bg-light py-2 px-3 ${showSidebar?"with_sidebar" : ""}`}>
-            <Routes>
-              <Route path='/' element={<Dashbord/>}/>
+      <section id="content_section"
+      className={`bg-light py-2 px-3 ${showSidebar?"with_sidebar" : ""}`}>
+        <Routes>
+          <Route path='/' element={<Dashbord/>}/>
 
-              {/* {permissions.filter (p=>p.title=='read_categories').length>0 ? (
-                   <Route path='/categories' element={<Category/>}>
-                <Route path=':categoryId' element={<CategoryChildren/>}/>
-              </Route>
-              ):null } */}
+          {hasCategoryPermission && (
+          <Route path='/categories' element={<Category/>}>
+            <Route path=':categoryId' element={<CategoryChildren/>}/>
+          </Route>
+          )}
+    
+          <Route path='/categories/:categoryId/attributes' 
+          element={<PermComponent component={<Attributes/>} pTitle={'read_category_attr'}/>}/>
 
-              {/* {permissions.findIndex(p=>p.title==('read_categories')) > -1 ? (         // این ینی title دقیقا برابر 'read_categories' باشد
-                <Route path='/categories' element={<Category/>}>
-                <Route path=':categoryId' element={<CategoryChildren/>}/>
-              </Route>
-              ):null } */}
+          <Route path='/products' element={<PermComponent component={<Product/>} pTitle={'read_products'}/>}/>
 
-              {hasPermissions('read_categories') && (   // این ینی title  شامل 'read_categories' باشد
-                <Route path='/categories' element={<Category/>}>
-                <Route path=':categoryId' element={<CategoryChildren/>}/>
-              </Route>
-             ) }
-        
-              {hasPermissions('read_categories_attrs')&&(
-              <Route path='/categories/:categoryId/attributes' element={<Attributes/>}/>
-              )}
+          <Route path='/products/add-product' element={<PermComponent component={<AddProduct/>} pTitle={'create_products'}/>}/>
 
+          <Route path='/products/set-attr' element={<PermComponent component={<SetAttribute/>} pTitle={'create_product_attr'}/>}/>
 
-              {hasPermissions('read_products')&&(
-              <Route path='/products' element={<Product/>}/>
-              )}
+          <Route path='/products/gallery' element={<PermComponent component={<ProductGallery/>} pTitle={'create_product_image'}/>}/>
+          
+          <Route path='/colors' element={<PermComponent component={<Colors/>} pTitle={'read_colors'}/>}/>
 
-              {hasPermissions('create_product')&&(
-              <Route path='/products/add-product' element={<AddProduct/>}/>
-              )}
-              
-              {hasPermissions('create_product_attr')&&(
-              <Route path='/products/set-attr' element={<SetAttribute/>}/>
-              )}
+          <Route path='/guaranties' element={<PermComponent component={<Guaranties/>} pTitle={'read_guarantees'}/>}/>
+          
+          <Route path='/brands' element={<PermComponent component={<Brands/>} pTitle={'read_brands'}/>}/>
 
+    
+            {hasDiscountPermission && (
+               <Route path='/discounts' element={<Discounts/>}>
+                  <Route path='/discounts/add-discount-code' element={<AddDiscount/>}/>
+                  {/* <Route path=':add-discount-code' element={<AddDiscount/>}/> */}
+               </Route>
+            )}
+         
+          
+          <Route path='/cards' element={<Cards/>}/>
+          <Route path='/orders' element={<Orders/>}/>
+          <Route path='/delivery' element={<Delivery/>}/>
 
-              <Route path='/products/gallery' element={<ProductGallery/>}/>
-
-              
-              {hasPermissions('read_colors')&&(
-              <Route path='/colors' element={<Colors/>}/>
-              )}
-
-              
-              {hasPermissions('read_guarantees')&&(
-              <Route path='/guaranties' element={<Guaranties/>}/>
-              )}
-
-              {hasPermissions('read_brands')&&(
-              <Route path='/brands' element={<Brands/>}/>
-              )}
-
-
-              {hasPermissions('read_discounts')&&(
-              <Route path='/discounts' element={<Discounts/>}>
-                <Route path='/discounts/add-discount-code' element={<AddDiscount/>}/>
-                {/* <Route path=':add-discount-code' element={<AddDiscount/>}/> */}
-              </Route>
-              )}
-
-
-              <Route path='/cards' element={<Cards/>}/>
-              <Route path='/orders' element={<Orders/>}/>
-              <Route path='/delivery' element={<Delivery/>}/>
-
-
-
-              {hasPermissions('read_users')&&(
+            {hasUserPermission && (
               <Route path='/users' element={<Users/>}>
                 <Route path=':add-user' element={<AddUser/>}/>
               </Route>
-              )}
+            )}
+              <Route path='/users' element={<Users/>}>
+                <Route path=':add-user' element={<AddUser/>}/>
+              </Route>
+              
 
-
-              {hasPermissions('read_roles')&&(
+            {hasRolePermission && (
               <Route path='/roles' element={<Roles/>}>
                 <Route path=':add-role' element={<AddRoles/>}/>
               </Route>
-              )}
-              
-
-
-              {hasPermissions('read_permissions')&&(
-              <Route path='/permissions' element={<Permissions/>}/>
             )}
+              <Route path='/roles' element={<Roles/>}>
+                <Route path=':add-role' element={<AddRoles/>}/>
+              </Route>
 
 
-              <Route path='/questions' element={<Questions/>}/>
-              <Route path='/comments' element={<Comments/>}/>
-              <Route path='/logout' element={<Logout/>}/>
-             
-              <Route path='*' element={<Dashbord/>}/>
-              </Routes>
-          </section>
+           <Route path='/permissions' element={<PermComponent component={<Permissions/>} pTitle={'read_permissions'}/>}/>
+          <Route path='/questions' element={<Questions/>}/>
+          <Route path='/comments' element={<Comments/>}/>
+          <Route path='/logout' element={<Logout/>}/>
+          
+          <Route path='*' element={<Dashbord/>}/>
+          </Routes>
+      </section>
   )
 }

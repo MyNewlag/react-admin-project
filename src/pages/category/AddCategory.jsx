@@ -33,7 +33,6 @@ export default function AddCategory({setForceRender}){
                     })) 
                 }
             } catch (error) {
-                console.log(error);
             }
     }
 
