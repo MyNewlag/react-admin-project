@@ -45,9 +45,9 @@ export default function Content() {
           <Route path='/' element={<Dashbord/>}/>
 
           {hasCategoryPermission && (
-          <Route path='/categories' element={<Category/>}>
-            <Route path=':categoryId' element={<CategoryChildren/>}/>
-          </Route>
+            <Route path='/categories' element={<Category/>}>
+              <Route path=':categoryId' element={<CategoryChildren/>}/>
+            </Route>
           )}
     
           <Route path='/categories/:categoryId/attributes' 
