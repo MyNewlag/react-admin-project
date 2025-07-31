@@ -6,6 +6,7 @@ import Actions from './tableAddition/Actions'
 import { deleteProductsService, getProductsService } from '../../service/products'
 import { Alert, Confirm } from '../../utils/Alert'
 import AddButtonLink from '../../components/form/AddButtonLink'
+import { useHasPermission } from '../../hook/permissionsHook'
 
 export default function TableProduct() {
   const [data,setData]=useState([])
@@ -15,6 +16,8 @@ export default function TableProduct() {
   const [countOnPage,setCountOnPage]=useState(2)
   const [pageCount,setPageCount]=useState(0)        //تعداد کل صفحات
 
+
+  const hasPerm = useHasPermission("create_product")
 
      const dataInfo=[
         {field:"id" , title:"#"},
@@ -92,7 +95,9 @@ export default function TableProduct() {
     handleSearch={handleSearch}
     >
  
+    {hasPerm && 
       <AddButtonLink href={"/products/add-product"}/>
+    }
       
     </PaginatedDataTable>
     

@@ -8,6 +8,7 @@ import Actions from './tableAdditionl/Actions';
 import { Outlet, useParams } from 'react-router-dom';
 import { convertDateToJalali } from '../../utils/convertDate';
 import { Alert, Confirm } from '../../utils/Alert';
+import { useHasPermission } from '../../hook/permissionsHook';
 
 
 export default function CategoryTable() {
@@ -17,6 +18,10 @@ export default function CategoryTable() {
     const [forceRender ,setForceRender]=useState(0);
     const [loading ,setloading]=useState(false);
 
+    
+    const hasAddCategoryPerm=useHasPermission("create_category")
+    
+
   const handleGetCategories=async()=>{
     setloading(true)
     try {
@@ -24,10 +29,8 @@ export default function CategoryTable() {
       if (res.status==200) {
         setData(res.data.data)
       }
-      // else{
-      //   Alert("خطا",res.data.message,"error")
-      // }
     } catch (error) {
+      console.log(error);
     } finally{
       setloading(false)
     }
@@ -99,7 +102,10 @@ export default function CategoryTable() {
       loading={loading}
       >
 
-      <AddCategory setForceRender={setForceRender}/>
+        {hasAddCategoryPerm && (
+         <AddCategory setForceRender={setForceRender} />
+        )}
+
       </PaginatedTable>
       }
       </>

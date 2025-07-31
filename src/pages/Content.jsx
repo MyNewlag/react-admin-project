@@ -27,6 +27,7 @@ import AddRoles from './roles/AddRoles';
 import AddUser from './users/AddUser';
 import PermComponent from '../components/PermComponent';
 import { useHasPermission } from './../hook/permissionsHook';
+import AddDelivery from './delivery/AddDelivery';
 
 export default function Content() {
 
@@ -36,6 +37,7 @@ export default function Content() {
  const hasDiscountPermission = useHasPermission("read_discounts")
  const hasUserPermission = useHasPermission("read_users")
  const hasRolePermission = useHasPermission("read_roles")
+ const hasDeliveryPermission = useHasPermission("read_deliveries")
  
  
   return (
@@ -78,7 +80,12 @@ export default function Content() {
           
           <Route path='/cards' element={<Cards/>}/>
           <Route path='/orders' element={<Orders/>}/>
-          <Route path='/delivery' element={<Delivery/>}/>
+
+            {hasDeliveryPermission && (
+              <Route path='/deliveries' element={<Delivery/>}>
+                <Route path=':add-delivery' element={<AddDelivery/>}/>
+              </Route>
+            )}
 
             {hasUserPermission && (
               <Route path='/users' element={<Users/>}>

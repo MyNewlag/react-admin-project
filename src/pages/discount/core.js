@@ -1,7 +1,7 @@
 
 import * as yup from "yup";
-import { addDiscountServic, updateDiscountServic } from "../../service/discounts";
 import { Alert } from "../../utils/Alert";
+import { addDiscountServic, updateDiscountServic } from "../../service/discounts";
 import { convertDateToMiladi } from "../../utils/convertDate";
 
 

@@ -17,6 +17,7 @@ export const useHasPermission=(pTitle)=>{
      (typeof(pTitle)==="object" ?
       (hasOneOfPermission(permissions ,pTitle)) :
      permissions.findIndex(p=>p.title.includes(pTitle)) > -1)
+     
 }
 
 const hasOneOfPermission = (permissions ,pTitles)=>{

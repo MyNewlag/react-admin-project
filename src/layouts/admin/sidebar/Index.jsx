@@ -108,7 +108,7 @@ export default function Index() {
                   /> 
              
                 <SidebarItem
-                targetPath={"/delivery"}
+                targetPath={"/deliveries"}
                 icon="fas fa-truck-loading"
                 title="مدیریت نحوه ارسال "
                 pTitle="read_delivery"
