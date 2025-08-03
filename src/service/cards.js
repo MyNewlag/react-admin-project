@@ -16,3 +16,7 @@ export const editCardService=(id,data)=>{
     return httpService(`/admin/carts/${id}` , "put" , data)
 }
 
+export const getOneCardService=(id)=>{
+    return httpService(`/admin/carts/${id}` , "get" )
+}
+

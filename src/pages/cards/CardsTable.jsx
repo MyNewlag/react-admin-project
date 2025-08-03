@@ -55,8 +55,6 @@ export default function CardsTable() {
       }
     }
 
-console.log(data);
-
     const handleDeleteCard=async(rowData)=>{
       if (await Confirm("حذف" , `آیا از حذف سبد ${rowData.id} اطمینان دارید؟`)) {
         const res=await deleteCardService(rowData.id)

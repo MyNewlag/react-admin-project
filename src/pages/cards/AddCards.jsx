@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import ModalsContainer from '../../components/ModalsContainer'
-import { useNavigate, useOutletContext } from 'react-router-dom'
+import { useLocation, useNavigate, useOutletContext } from 'react-router-dom'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { initialValues, onSubmit, validateSchema } from './core'
 import { getAllProductTitlesService, getOneProductService } from '../../service/products'
@@ -9,12 +9,16 @@ import FormikError from './../../components/form/FormikError';
 // import Select from 'react-select/base'
 import Select from 'react-select';
 import { numberWithCommas } from '../../utils/numbers'
-import { addNewCartService } from '../../service/cards'
+import { addNewCartService, editCardService, getOneCardService } from '../../service/cards'
 import { Alert } from '../../utils/Alert'
 
 export default function AddCards() {
   
   const navigate = useNavigate()
+
+  const location=useLocation()
+  const cardToEdit=location.state?.cardId
+  
 
   const {handleGetCards}=useOutletContext()
   
@@ -22,8 +26,8 @@ export default function AddCards() {
   const [curentProduct ,setCurentProduct]=useState(null)
   const [colors ,setColors]=useState([])
   const [guarantees ,setGuarantees]=useState([])
-  const [selectProducts ,setSelectProducts]=useState([])
   const [selectProductInfo ,setSelectProductsInfo]=useState([])
+  const [reInitialValue ,setReInitialValue]=useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
 
@@ -41,36 +45,71 @@ export default function AddCards() {
       const res=await getOneProductService(e.value)
       if (res.status==200) {
         const product = res.data.data
-        // console.log(product);
-        
         setCurentProduct(product)
         setColors(product.colors.map(c=>({value:c.id , label:c.title})))
         setGuarantees(product.guarantees.map(g=>({value:g.id , label:g.title})))
       }
     }
 
-
     const handleConfirmAddCart=async(formik)=>{
       setIsSubmitting(true);
-      const res=await addNewCartService({
-        user_id: formik.values.user_id,
-        products:selectProducts
-      })
-          if (res.status==201) {
-            Alert("OK..." , res.data.message,"success")
-            handleGetCards()
-            navigate(-1)
-          }
-          setIsSubmitting(false)
+      let products=[]
+      for (const p of selectProductInfo) {
+            products.push({
+            product_id:p.product.id,
+            color_id:p.color.id || "",
+            guarantee_id:p.guarantee.id || "",
+            count:p.count
+          })
+      }
+      let res ;
+     if( cardToEdit ){
+        res=await editCardService(cardToEdit ,{
+          user_id: formik.values.user_id,
+          products
+       })
+     } else{
+         res=await addNewCartService({
+          user_id: formik.values.user_id,
+          products
+        })
+      }
+      res && setIsSubmitting(false)
+      if (res.status==201 || res.status==200) {
+        Alert("OK..." , res.data.message,"success")
+        handleGetCards()
+        navigate(-1)
+      }
+      
+      
+    }
+
+    const handleGetOneCard=async()=>{
+      const res=await getOneCardService(cardToEdit)
+      if (res.status==200) {
+        const card=res.data.data
+        setReInitialValue({...initialValues , user_id:card.user_id})
+        let products=[]
+        for (const item of card.items) {
+          products.push({
+            id:item.id,
+            product:item.product,
+            guarantee:item.guarantee,
+            color:item.color,
+            count:item.count
+          })
+        }
+        setSelectProductsInfo(products)
+      }
     }
 
     const handleDeleteProduct=(id)=>{
-      console.log(id);
-      
-      const inedx=selectProductInfo.findIndex(s=>s.id==id)
-      setSelectProducts(old=>old.splice(inedx,1))
       setSelectProductsInfo(old=>old.filter(o=>o.id!=id))
     }
+
+    useEffect(()=>{
+      cardToEdit && handleGetOneCard()
+    },[])
 
     useEffect(()=>{
       handleGetAllProductsTitle()
@@ -84,17 +123,17 @@ export default function AddCards() {
   className="show d-block"
     fullScreen={true}
     id="edit_cart_modal"
-    title="جزِِئیات و افزودن سبد خرید"
+    title={cardToEdit ? "جزئیات و ویرایش سبد خرید" :"افزودن سبد خرید"}
     closeFunction={()=>navigate(-1)}
  >
     
         <div className="container">
 
             <Formik
-            initialValues={initialValues}
-            onSubmit={(values,actions)=>onSubmit(values,actions,setSelectProducts,
-              setSelectProductsInfo,curentProduct)}
-            validateSchema={validateSchema}
+              initialValues={reInitialValue || initialValues}
+              onSubmit={(values,actions)=>onSubmit(values,actions,setSelectProductsInfo,curentProduct)}
+              validateSchema={validateSchema}
+              enableReinitialize
             >
 
               {
@@ -104,8 +143,7 @@ export default function AddCards() {
                       <div className="row my-3 justify-content-center">
                         <div className=' col-12 col-md-4 col-lg-2 my-1'>
                           <Field type="text" name="user_id" className="form-control"
-                          placeholder="آی دی مشتری" 
-                            disabled={selectProducts.length > 0} />
+                          placeholder="آی دی مشتری" />
                           <br/>
                           <ErrorMessage name="user_id" component={FormikError}/>
                         </div>
@@ -158,9 +196,9 @@ export default function AddCards() {
                                            title="حذف محصول از سبد" data-bs-placement="top"
                                             onClick={()=>handleDeleteProduct(product.id)}
                                             ></i>
-                                          {product.productName}
-                                          (قیمت واحد: {numberWithCommas(product.price)})
-                                          (گارانتی: {product.guarantee&& product.guarantee})
+                                          {product.product.productName}
+                                          (قیمت واحد: {numberWithCommas(product.product.price)})
+                                          (گارانتی: {product.guarantee.title})
                                           ({product.count} عدد)
                                         
                                           <i className="fas fa-circle mx-1" style={{ color: product.color?.code }}></i>
@@ -175,7 +213,7 @@ export default function AddCards() {
                                         <div className="col-6">
                                             <div className="input-group my-3 dir_ltr">
                                                 <span className="input-group-text justify-content-center w-75" >
-                                                  {numberWithCommas(selectProductInfo.map(p=>p.count*p.price)
+                                                  {numberWithCommas(selectProductInfo.map(p=>p.count*p.product.price)
                                                   .reduce((a, b)=>a+b))}</span>
                                                 <span className="input-group-text w-25 text-center"> جمع کل </span>
                                             </div>

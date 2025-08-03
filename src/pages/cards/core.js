@@ -2,21 +2,18 @@ import * as yup from "yup";
 import { Alert } from "../../utils/Alert";
 
 
-export const onSubmit=async(values,actions,setSelectProducts,
-    setSelectProductsInfo,curentProduct)=>{
+export const onSubmit=async(values,actions,setSelectProductsInfo,curentProduct)=>{
         // console.log(values);
         // console.log(curentProduct);
             
-        setSelectProducts(old=>[...old ,{...values}])
         actions.resetForm()
         actions.setFieldValue('user_id' , values.user_id)
 
         setSelectProductsInfo(old=>[...old ,{
             id:curentProduct.id+Math.random(),
-            productName:curentProduct.title,
-            price:curentProduct.price,
-            guarantee:values.guarantee_id >0 ? curentProduct.guarantees.filter(g=>g.id==values.guarantee_id)[0].title : "yari",
-            color:values.color_id > 0 ? curentProduct.colors.filter(c=>c.id==values.color_id)[0] : "asma",
+            product:curentProduct,
+            guarantee:values.guarantee_id >0 ? curentProduct.guarantees.filter(g=>g.id==values.guarantee_id)[0] : "",
+            color:values.color_id > 0 ? curentProduct.colors.filter(c=>c.id==values.color_id)[0] : "",
             count:values.count
         }])
 }
