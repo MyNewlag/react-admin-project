@@ -8,6 +8,10 @@ export const getProductsService = (page, countOnPage, searchChar) => {
   );
 };
 
+export const getAllProductTitlesService = () => {
+  return httpService(`/admin/products/all_titles`, "get");
+};
+
 export const getOneProductService = (id) => {
   return httpService(`/admin/products/${id}`, "get");
 };

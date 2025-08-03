@@ -85,12 +85,12 @@ export default function SearchableSelect({resultType,options,name,label
                       onClick={(e)=>e.stopPropagation()} 
                           onChange={(e)=>setCopyOptions(options.filter(o=>o.value.includes(e.target.value)))}/>       
 
-                              <ul className="p-0">
-                                  {copyOptions.map((o) => (
-                                      <li key={o.id} className="multi_select_items pointer" 
-                                      onClick={()=>handleSelectItems(o.id, form)}> {o.value} </li>
-                                  ))}
-                              </ul>
+                          <ul className="p-0">
+                              {copyOptions.map((o) => (
+                                  <li key={o.id} className="multi_select_items pointer" 
+                                  onClick={()=>handleSelectItems(o.id, form)}> {o.value} </li>
+                              ))}
+                          </ul>
 
                 </div>
               </div>

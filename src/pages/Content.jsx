@@ -28,6 +28,7 @@ import AddUser from './users/AddUser';
 import PermComponent from '../components/PermComponent';
 import { useHasPermission } from './../hook/permissionsHook';
 import AddDelivery from './delivery/AddDelivery';
+import AddCards from './cards/AddCards';
 
 export default function Content() {
 
@@ -38,6 +39,7 @@ export default function Content() {
  const hasUserPermission = useHasPermission("read_users")
  const hasRolePermission = useHasPermission("read_roles")
  const hasDeliveryPermission = useHasPermission("read_deliveries")
+ const hasCardPermission = useHasPermission("read_cards")
  
  
   return (
@@ -78,12 +80,17 @@ export default function Content() {
             )}
          
           
-          <Route path='/cards' element={<Cards/>}/>
+          {hasCardPermission && (
+              <Route path='/cards' element={<Cards/>}>
+                <Route path=':add-card' element={<PermComponent component={<AddCards/>} pTitle ="create_card"/>}/>
+              </Route>
+          )}
+
           <Route path='/orders' element={<Orders/>}/>
 
             {hasDeliveryPermission && (
               <Route path='/deliveries' element={<Delivery/>}>
-                <Route path=':add-delivery' element={<AddDelivery/>}/>
+                <Route path=':add-delivery' element={<PermComponent component={<AddDelivery/>} pTitle="create_delivery"/>}/>
               </Route>
             )}
 

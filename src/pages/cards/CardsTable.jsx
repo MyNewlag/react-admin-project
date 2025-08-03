@@ -1,54 +1,95 @@
 
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { deleteCardService, getAllCardsService } from '../../service/cards'
+import PaginatedDataTable from '../../components/PaginatedDataTable'
+import AddButtonLink from '../../components/form/AddButtonLink'
+import Actions from './tableActions/Actions'
+import { Alert, Confirm } from '../../utils/Alert'
+import { Outlet } from 'react-router-dom'
 
 export default function CardsTable() {
+
+    const [data,setData]=useState([])
+    const [loading,setLoading]=useState(false)
+    const [searchChar,setSearchChar]=useState("")
+    const [curentPage,setCurentPage]=useState(1) 
+    const [countOnPage,setCountOnPage]=useState(2)
+    const [pageCount,setPageCount]=useState(0)        //تعداد کل صفحات
+
+
+    const dataInfo=[
+      {field:"id" , title:"#"},
+      {field:"user_id" , title:"آی دی کاربر"},
+      {field:null , title:"نام کاربر",
+        elements:(rowData)=>`${rowData.user.first_name || ""} ${rowData.user.last_name || ""}`
+      },
+      {field:null , title:"شماره تماس",
+        elements:(rowData)=>`${rowData.user.phone}`
+      },
+      {field:null , title:"تعداد کالاها",
+        elements:(rowData)=>rowData.items.length
+      },
+      {field:null , title:"عملیات ",
+        elements:(rowData)=><Actions rowData={rowData} handleDeleteCard={handleDeleteCard}/>
+      },
+    ]
+
+    const searchParams={
+    title:"جستجو",
+    placeholder:"متن رو وارد کن"
+    }
+
+    const handleSearch=(char)=>{
+    setSearchChar(char)
+    handleGetCards(1,countOnPage,char)
+  }
+
+    const handleGetCards=async (page=curentPage,count=countOnPage,char=searchChar)=>{
+      setLoading(true)
+      const res=await getAllCardsService(page,count,char)
+      if (res.status==200) {
+        setData(res.data.data.data)
+        setLoading(false)
+        setPageCount(res.data.data.last_page)
+      }
+    }
+
+console.log(data);
+
+    const handleDeleteCard=async(rowData)=>{
+      if (await Confirm("حذف" , `آیا از حذف سبد ${rowData.id} اطمینان دارید؟`)) {
+        const res=await deleteCardService(rowData.id)
+          if (res.status==200) {
+            setData(oldData=>oldData.filter(o=>o.id!=rowData.id))
+            Alert("انجام شد" , res.data.message,"success")
+              handleGetCards(curentPage,countOnPage,searchChar)
+          }
+        }
+      }
+    
+
+      useEffect(()=>{
+        handleGetCards(curentPage,countOnPage,searchChar)
+      },[curentPage])
+
   return (
-    <div>
-          <table className="table table-responsive text-center table-hover table-bordered">
-                <thead className="table-secondary">
-                    <tr>
-                        <th>#</th>
-                        <th>آی دی مشتری</th>
-                        <th>نام مشتری</th>
-                        <th>تاریخ</th>
-                        <th>مبلغ کل سبد</th>
-                        <th>وضعیت</th>
-                        <th>عملیات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>50</td>
-                        <td>قاسم بساکی</td>
-                        <td>1400/07/15</td>
-                        <td>100هزار تومان</td>
-                        <td>فعال</td>
-                        <td>
-                            <i className="fas fa-edit text-warning mx-1 hoverable_text pointer has_tooltip" title="ویرایش و جزئیات سبد" data-bs-toggle="modal" data-bs-placement="top" data-bs-target="#edit_cart_modal"></i>
-                            <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" title="حذف سبد" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <nav aria-label="Page navigation example" className="d-flex justify-content-center">
-                <ul className="pagination dir_ltr">
-                  <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                  <li className="page-item"><a className="page-link" href="#">1</a></li>
-                  <li className="page-item"><a className="page-link" href="#">2</a></li>
-                  <li className="page-item"><a className="page-link" href="#">3</a></li>
-                  <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-    </div>
+    
+    <PaginatedDataTable
+    tableData={data}
+    dataInfo={dataInfo}
+    searchParams={searchParams}
+    loading={loading}
+    curentPage={curentPage}
+    setCurentPage={setCurentPage}
+    pageCount={pageCount}
+    handleSearch={handleSearch}
+    >
+ 
+
+      <AddButtonLink href={"/cards/add-card"}/>
+      <Outlet context={{handleGetCards}}/>
+
+    </PaginatedDataTable>
   )
 }
