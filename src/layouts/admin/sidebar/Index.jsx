@@ -93,10 +93,10 @@ export default function Index() {
 
 
                  <SidebarItem
-                 targetPath={"/cards"}
+                 targetPath={"/carts"}
                  icon="fas fa-shopping-basket"
                  title="مدیریت سبد ها"
-                 pTitle="read_cards"
+                 pTitle="read_carts"
                   />  
                 
 

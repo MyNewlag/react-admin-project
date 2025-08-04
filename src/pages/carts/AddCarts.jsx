@@ -5,22 +5,22 @@ import { useLocation, useNavigate, useOutletContext } from 'react-router-dom'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { initialValues, onSubmit, validateSchema } from './core'
 import { getAllProductTitlesService, getOneProductService } from '../../service/products'
-import FormikError from './../../components/form/FormikError';
+import FormikError from '../../components/form/FormikError';
 // import Select from 'react-select/base'
 import Select from 'react-select';
 import { numberWithCommas } from '../../utils/numbers'
-import { addNewCartService, editCardService, getOneCardService } from '../../service/cards'
+import { addNewCartService, editCartService, getOneCartService } from '../../service/carts'
 import { Alert } from '../../utils/Alert'
 
-export default function AddCards() {
+export default function AddCarts() {
   
   const navigate = useNavigate()
 
   const location=useLocation()
-  const cardToEdit=location.state?.cardId
+  const cartToEdit=location.state?.cartId
   
 
-  const {handleGetCards}=useOutletContext()
+  const {handleGetCarts}=useOutletContext()
   
   const [allProducts ,setAllProducts]=useState([])
   const [curentProduct ,setCurentProduct]=useState(null)
@@ -51,6 +51,8 @@ export default function AddCards() {
       }
     }
 
+    
+
     const handleConfirmAddCart=async(formik)=>{
       setIsSubmitting(true);
       let products=[]
@@ -63,8 +65,8 @@ export default function AddCards() {
           })
       }
       let res ;
-     if( cardToEdit ){
-        res=await editCardService(cardToEdit ,{
+     if( cartToEdit ){
+        res=await editCartService(cartToEdit ,{
           user_id: formik.values.user_id,
           products
        })
@@ -77,20 +79,22 @@ export default function AddCards() {
       res && setIsSubmitting(false)
       if (res.status==201 || res.status==200) {
         Alert("OK..." , res.data.message,"success")
-        handleGetCards()
+        handleGetCarts()
         navigate(-1)
       }
       
       
     }
 
-    const handleGetOneCard=async()=>{
-      const res=await getOneCardService(cardToEdit)
+    const handleGetOneCart=async()=>{
+      const res=await getOneCartService(cartToEdit)
       if (res.status==200) {
-        const card=res.data.data
-        setReInitialValue({...initialValues , user_id:card.user_id})
+        const cart=res.data.data
+        console.log(cart);
+        
+        setReInitialValue({...initialValues , user_id:cart.user_id})
         let products=[]
-        for (const item of card.items) {
+        for (const item of cart.items) {
           products.push({
             id:item.id,
             product:item.product,
@@ -108,7 +112,7 @@ export default function AddCards() {
     }
 
     useEffect(()=>{
-      cardToEdit && handleGetOneCard()
+      cartToEdit && handleGetOneCart()
     },[])
 
     useEffect(()=>{
@@ -123,7 +127,7 @@ export default function AddCards() {
   className="show d-block"
     fullScreen={true}
     id="edit_cart_modal"
-    title={cardToEdit ? "جزئیات و ویرایش سبد خرید" :"افزودن سبد خرید"}
+    title={cartToEdit ? "جزئیات و ویرایش سبد خرید" :"افزودن سبد خرید"}
     closeFunction={()=>navigate(-1)}
  >
     
@@ -196,7 +200,7 @@ export default function AddCards() {
                                            title="حذف محصول از سبد" data-bs-placement="top"
                                             onClick={()=>handleDeleteProduct(product.id)}
                                             ></i>
-                                          {product.product.productName}
+                                          {product.product.title}
                                           (قیمت واحد: {numberWithCommas(product.product.price)})
                                           (گارانتی: {product.guarantee.title})
                                           ({product.count} عدد)

@@ -494,3 +494,8 @@ td , th {
     max-height: calc(100vh - 210px) !important;
     overflow: auto;
   }
+
+
+  .mini_date_box select{
+    padding: 0 !important;
+  }

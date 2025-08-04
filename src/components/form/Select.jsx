@@ -42,7 +42,9 @@ export default function Select({options,name,label,className,firstItem,handleCha
                               )
                           }}
                 </Field>
+                {label &&
                     <span className="input-group-text w_6rem justify-content-center">{label}</span>
+                }
             </div>
             <ErrorMessage name={name} component={FormikError}/>
         </div>

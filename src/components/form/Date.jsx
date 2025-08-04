@@ -19,7 +19,7 @@ const months = [
     {id: 12 , value: "اسفند"},
 ]
 
-export default function Date({formik,name,label,yearsLimit,initialDate,className}) {
+export default function Date({formik,name,label,yearsLimit,initialDate,className,placeholder}) {
 
     const [day , setDay] = useState();
     const [month , setMonth] = useState();
@@ -59,8 +59,10 @@ export default function Date({formik,name,label,yearsLimit,initialDate,className
 
             <div className="input-group mb-3 dir_ltr pointer" onClick={handleShowDateConfig}>
                 <FastField type="text" name={name} className="form-control pointer"
-                 placeholder={'جهت انتخاب تاریخ کلیک کنید'} disabled/>
+                 placeholder={placeholder || 'جهت انتخاب تاریخ کلیک کنید'} disabled/>
+                 {/* {label &&  */}
                 <span className="input-group-text w_6rem justify-content-center"> {label} </span>
+                 {/* } */}
             </div>
             {
                 showConfig ? (

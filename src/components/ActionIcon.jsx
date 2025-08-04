@@ -4,7 +4,6 @@ import { useHasPermission } from '../hook/permissionsHook'
 
 export default function ActionIcon({icon , pTitle , ...props}) {
     const hasPerm = useHasPermission(pTitle)
-    console.log(pTitle);
     
   return hasPerm &&(
         <i 
