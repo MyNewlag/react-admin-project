@@ -1,15 +1,80 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { getFewerProductService, toggleNotificationService } from './../../service/products';
+import { Alert } from '../../utils/Alert';
+import SpinnerLoad from '../../components/SpinnerLoad';
+import ActionIcon from '../../components/ActionIcon';
 
-export default function ProductTable({number,number2,number3,number4}) {
-  return (
-      <tr>
-        <td>{number}</td>
-        <td>{number2}</td>
-        <td>{number3}</td>
-        <td>{number4}</td>
-        <td>
-            <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" title="نادیده گرفتن" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-        </td>
-    </tr>
-  )
+export default function ProductTable() {
+
+  const [fewerProducts , setFewerProducts]=useState([])
+  const [loading , setLoading]=useState(false)
+
+  const handleGetFewerProducts =async()=>{
+    setLoading(true)
+    const res=await getFewerProductService()
+    setLoading(false)
+    if (res.status==200) {
+      const product=res.data.data
+      product.length > 0 ? setFewerProducts(product) : setFewerProducts([]) 
+    }
+  }
+
+
+  const handleTurnToOffNotification =async(productId)=>{
+    const res=await toggleNotificationService(productId)
+    if (res.status==200) {
+      Alert("انجام شد " ,res.data.message,"success")
+      setFewerProducts(old=>old.filter(p=>p.id!=productId))
+    }
+  }
+
+
+  useEffect(()=>{
+    handleGetFewerProducts()
+  },[])
+
+return (
+    <div className="col-12 col-lg-6">
+      <p className="text-center mt-3 text-dark">محصولات رو به اتمام</p>
+      {loading ? (<SpinnerLoad colorClass={"text-primary"}/>) 
+      : fewerProducts.length === 0 
+      ? (
+        <strong className="text-primary">فعلا محصول رو به اتمامی وجود ندارد</strong>
+      ) 
+      : (
+        <table className="table table-responsive text-center table-hover table-bordered no_shadow_back_table font_08">
+          <thead className="table-secondary">
+            <tr>
+              <th>#</th>
+              <th>دسته</th>
+              <th>عنوان</th>
+              <th>وضعیت</th>
+              <th>عملیات</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              fewerProducts.map(p=>(
+              <tr key={p.id}>
+                <td>{p.id}</td>
+                <td>{p.categories[0]?.title}</td>
+                <td>{p.title}</td>
+                <td>{p.stock === 0 ? (
+                  <span className="text-danger">پایان یافته</span>
+                ) : `رو به اتمام : (${p.stock})` }</td>
+                <td>
+                  <ActionIcon icon="fas fa-eye-slash text-danger" 
+                  pTitle="update_product_notification" 
+                  title="نادیده گرفتن"
+                  onClick={()=>handleTurnToOffNotification(p.id)}
+                  />
+                </td>
+              </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 }

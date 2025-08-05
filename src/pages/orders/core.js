@@ -9,7 +9,7 @@ import { Alert } from "../../utils/Alert";
 export const onSubmit=async(values,actions,navigate,handleGetAllOrders)=>{
     
     values ={
-        ...values , pay_at:convertDateToMiladi(values.pay_at)
+        ...values , pay_at:values.pay_at ? convertDateToMiladi(values.pay_at): null
     }
 
     const res=await addNewOrdersService(values)

@@ -140,7 +140,7 @@ const AddOrder = () => {
                         control="date"
                         formik={formik}
                         name="pay_at"
-                        placeholder="تازیخ پرداخت "
+                        placeholder="تاریخ پرداخت "
                         initialDate={undefined}
                         yearsLimit={{from:10 , to:0}}
                         />

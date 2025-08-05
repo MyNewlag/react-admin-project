@@ -16,3 +16,11 @@ export const deleteOrdersService=(id)=>{
     return httpService(`/admin/orders/${id}` , "delete")
 }
 
+export const getOrdersStatisticsService=()=>{
+    return httpService(`/admin/orders/orders_statistics` , "get")
+}
+
+export const getThisYearOrdersService=()=>{
+    return httpService(`/admin/orders/this_year_orders` , "get")
+}
+

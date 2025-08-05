@@ -1,11 +1,10 @@
 import  Chart  from 'chart.js/auto';
 import React from 'react'
 
-var myChart;
+let chart;
 export const setDashbordChart=(labels,datapoints)=>{
-
-    const DATA_COUNT = 13;
-
+    chart && chart.destroy();
+    
     const data = {
         labels: labels,
         datasets: [
@@ -57,11 +56,11 @@ export const setDashbordChart=(labels,datapoints)=>{
 
 
     const ctx = document.getElementById('myChart').getContext('2d');
-    myChart=new Chart(ctx , config)
+    chart=new Chart(ctx , config)
 }
 
 
 export const destroyChart=()=>{
-    myChart.destroy();
+    chart.destroy();
 }
 

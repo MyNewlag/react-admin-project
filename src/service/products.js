@@ -39,3 +39,11 @@ export const addProductsAttributeService = (id, data) => {
 export const addProductImage = (id, data) => {
   return httpService(`/admin/products/${id}/add_image`, "post", data);
 };
+
+export const getFewerProductService = () => {
+  return httpService(`/admin/products/fewer_products`, "get");
+};
+
+export const toggleNotificationService = (id) => {
+  return httpService(`/admin/products/toggle_notification/${id}`, "get" );
+};

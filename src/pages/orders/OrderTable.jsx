@@ -32,7 +32,7 @@ export default function OrderTable() {
         },
         {field:"cart_id" , title:"کد سبد "},
         {field:null , title:"تاریخ پرداخت ",
-            elements:(rowData)=>convertDateToJalali(rowData.pay_at)
+            elements:(rowData)=>rowData.pay_at ? convertDateToJalali(rowData.pay_at):""
         },
         {field:null , title:"مبلغ پرداخت ",
         elements:(rowData)=>numberWithCommas(rowData.pay_amount)
