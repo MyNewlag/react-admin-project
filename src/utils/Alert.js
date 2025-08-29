@@ -1,6 +1,7 @@
 import swal from "sweetalert";
+
 export const Alert = (title, text, icon) => {
-  swal({
+ return swal({
     title,
     text,
     icon,

@@ -24,12 +24,14 @@ export const onSubmit = async (values, actions, setForceRender,editId) => {
     };
    if (editId) {
      const res = await editCategoryService(editId,values)
+     
      if (res.status == 200) {
        Alert('ثبت رکورد', res.data.message, 'success');
        setForceRender(last=>last+1)
-     }
-   }else{
-    const res = await createNewCategoryService(values)
+      }
+    }else{
+      const res = await createNewCategoryService(values)
+      console.log(values);
      if (res.status == 201) {
        Alert('ثبت رکورد', res.data.message, 'success');
        actions.resetForm();
