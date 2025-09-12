@@ -15,7 +15,6 @@ import { addCategoryAttrService, editCategoryAttrService } from '../../../servic
         if (editAttribute){
             const res= await editCategoryAttrService(editAttribute.id,values)
            if(res.status==200){
-
             setData(oldData=>{
                const newData=[...oldData]
                const index=newData.findIndex(d=>d.id===editAttribute.id)

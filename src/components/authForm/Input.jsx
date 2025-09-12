@@ -13,7 +13,6 @@ export default function Input({formik,type,name,icon,label}){
             <span className="symbol-input100">
                 <i className={icon}></i>
             </span>
-
         </div>
     )
 } 

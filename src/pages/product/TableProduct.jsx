@@ -35,7 +35,7 @@ export default function TableProduct() {
         {field:"price" , title:"قیمت"},
         {field:"stock" , title:"موجودی"},
         {field:null , title:"عملیات" , elements:(rowData)=><Actions rowData={rowData}
-         handleDeleteProduct={handleDeleteProduct}/>},
+         handleDeleteProduct={handleDeleteProduct}/>}
     ]
 
 
@@ -43,7 +43,7 @@ export default function TableProduct() {
       if( await Confirm("حذف !!!",`آیا از حذف  ${rowData.title} اطمینان دارید؟`)){
         const res=await deleteProductsService(rowData.id)
         if (res.status==200) {
-          Alert("موفقست",`رکورد ${rowData.title} حذف شد `,"success")
+          Alert("موفقیت",`رکورد ${rowData.title} حذف شد `,"success")
           handleGetProducts(curentPage,countOnPage,searchChar)
           if (data.length === 1 && curentPage > 1) {
             setCurentPage(curentPage - 1)

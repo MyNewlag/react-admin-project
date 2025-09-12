@@ -75,7 +75,7 @@ export default function ColorTable() {
     data={data}
     dataInfo={dataInfo}
     additionFeild={additionFeild}
-    numOfPage={10}
+    numOfPage={4}
     searchParams={searchParams}
     loading={loading}
   >

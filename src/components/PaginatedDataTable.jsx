@@ -86,7 +86,7 @@ export default function PaginatedDataTable({
             )
     }
 
-        { pages.length>1
+        {pages.length>1
               ?(
             <nav aria-label="Page navigation example" 
             className="d-flex justify-content-center">

@@ -25,7 +25,7 @@ export default function Attributes() {
     {field:"title" , title:"عنوان محصول"},
     {field:"unit" , title:"واحد"},
     {field:null ,
-    title:"نمابش در فیلتر",
+    title:"نمایش در فیلتر",
      elements:(rowData)=><ShowInFilter rowData={rowData}/>
     },
      {
@@ -39,7 +39,7 @@ export default function Attributes() {
 
         
   const searchParams={
-    title:"سرچ",
+    title:"جستجو",
     placeholder:"متن رو وارد کن",
     searchField:"title"
   }
@@ -70,7 +70,6 @@ export default function Attributes() {
                Alert('موفقیت','','success')  
             //    setData (data.filter(d=>d.id!=rowData.id))
                setData(lastData=>[...lastData.filter(d=>d.id!=rowData.id)])
-            //   setData(lastData=>console.log(lastData))
              }else{
                Alert('!!!','شما از حذف منصرف شدید','warning')  
              }
@@ -92,7 +91,7 @@ export default function Attributes() {
         })
         }else (setReInitialValue(null))
   },[editAttribute])
-
+  
 
   useEffect(()=>{
    handleGetAttr()
@@ -131,7 +130,7 @@ export default function Attributes() {
                       >
 
                       <PrevPageButton/>                
-                      </PaginatedTable>
+                 </PaginatedTable>
             </div>
         </div>
         </>

@@ -5,6 +5,7 @@ import PrevPageButton from '../../components/PrevPageButton'
 
 export default function CategoryChildren() {
     const location=useLocation()
+    console.log(location);
     
     
   return (

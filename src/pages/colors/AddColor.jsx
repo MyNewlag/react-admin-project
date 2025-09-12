@@ -39,7 +39,6 @@ export default function AddColor({editColor,setEditColor, setData}) {
     const handleColor=()=>{
       setColorPickerValue("#000")
       setEditColor(null)
-
     }
     
     return (

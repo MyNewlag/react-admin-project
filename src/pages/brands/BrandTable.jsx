@@ -17,7 +17,7 @@ export default function BrandTable() {
         setLoading(true)
         const res = await getAllBrandsService()
 
-        res && setLoading(false) // اگر رس مقدار داشت لودینگ فالس شود
+        res && setLoading(false) 
         if(res.status === 200 ) {
             setData(res.data.data)
         }
@@ -48,7 +48,8 @@ export default function BrandTable() {
         {
           field: null,
           title: "عملیات",
-          elements: (rowData) => <Actions rowData={rowData} setBrandToEdit={setBrandToEdit} handleDeleteBrand={handleDeleteBrand} />,
+          elements: (rowData) => <Actions rowData={rowData} setBrandToEdit={setBrandToEdit}
+           handleDeleteBrand={handleDeleteBrand} />
         }
     ]
 
@@ -76,7 +77,7 @@ export default function BrandTable() {
 
            <AddBrands setData={setData} brandToEdit={brandToEdit} setBrandToEdit={setBrandToEdit}/>
         
-         </PaginatedTable>
+     </PaginatedTable>
    </>
   )
 }

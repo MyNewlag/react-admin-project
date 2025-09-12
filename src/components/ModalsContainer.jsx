@@ -12,7 +12,8 @@ export default function ModalsContainer({children,id,fullScreen,title
         tabIndex="-1"
         aria-hidden="true"
       >
-        <div className={`modal-dialog animate__animated animate__fadeInDown animate__fast ${fullScreen ? "modal-fullscreen" : ""}`}>
+        <div className={`modal-dialog animate__animated animate__fadeInDown animate__fast 
+          ${fullScreen ? "modal-fullscreen" : ""}`}>
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title flex-fill" id="exampleModalLabel">

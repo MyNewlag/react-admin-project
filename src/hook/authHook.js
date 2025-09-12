@@ -11,6 +11,7 @@ export const useIsLogin = () => {
   const handleCheckLogin = async () => {
     try {
       const res = await getUserService();
+      setLoading(true)
       setIsLogin(res.status == 200 ? true : false);
       setLoading(false);
 

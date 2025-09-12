@@ -7,6 +7,7 @@ import SpinnerLoad from './SpinnerLoad'
 export default function PaginatedTable({data,dataInfo,children,
   numOfPage,searchParams,loading}) {
 
+    
   
 const [itemInPage,setItemInPage]=useState(numOfPage)
 const [initData,setInitData]=useState(data)
@@ -32,7 +33,7 @@ useEffect(()=>{
 
 
 useEffect(()=>{
- setInitData(data.filter(i=>i[searchParams.searchField].includes(searchChar)))
+ setInitData(data.filter(i=>i[searchParams.searchField].includes(searchChar.trim())))
  setCurentPage(1)
 },[searchChar,data])
 
@@ -62,21 +63,31 @@ const downItemInPage=()=>{
 }
 
 
-{/* <div className="col-7 col-md-6 col-lg-4 mt-5">
-    <div className="input-group mb-3 dir_ltr">
-      <button className='btn btn-danger d-flex justify-content-center align-items-center'
-        onClick={downItemInPage}>کاهش رکورد</button>
-      <button className='btn btn-success d-flex justify-content-center align-items-center'
-      onClick={upItemInPage}>افزایش رکورد</button>
-        <input type="number" className="form-control " placeholder="تعداد رکورد را مشخص کنید"
-      value={itemInPage} onChange={()=>null}
-      />
-        <span className="input-group-text" >تعداد رکورد</span>
-    </div>
-</div> */}
 
   return (
       <>
+        <div className="my-3 d-flex justify-content-center">
+          <div className="input-group shadow-sm w-auto">
+            <button
+              className="btn btn-danger d-flex align-items-center"
+              type="button"
+              onClick={downItemInPage}>
+              <i className="bi bi-dash-lg me-1">کاهش</i> 
+            </button>
+
+            <span className="input-group-text bg-light fw-bold">
+              {itemInPage}
+            </span>
+
+            <button
+              className="btn btn-success d-flex align-items-center"
+              type="button"
+              onClick={upItemInPage}>
+              <i className="bi bi-plus-lg me-1">افزایش</i> 
+            </button>
+          </div>
+        </div>
+ 
       <div className="row justify-content-between">
         <div className="col-10 col-md-6 col-lg-4">
           <div className="input-group mb-3 dir_ltr">
@@ -93,8 +104,9 @@ const downItemInPage=()=>{
           {children}
         </div>
       </div>
+      
       {loading ? (
-        <SpinnerLoad colorClass={"text-primary"} />
+        <SpinnerLoad colorClass={"text-info"} />
       ) : data.length ? (
         <table className="table table-responsive text-center table-hover table-bordered">
           <thead className="table-secondary">
@@ -104,6 +116,7 @@ const downItemInPage=()=>{
               ))}
             </tr>
           </thead>
+          
           <tbody>
             {tableData.map((d) => (
               <tr key={d.id}>

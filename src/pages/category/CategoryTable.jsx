@@ -18,7 +18,6 @@ export default function CategoryTable() {
     const [forceRender ,setForceRender]=useState(0);
     const [loading ,setloading]=useState(false);
 
-    
     const hasAddCategoryPerm=useHasPermission("create_category")
     
 
@@ -64,22 +63,22 @@ export default function CategoryTable() {
           {field:"title" , title:"عنوان محصول"},
           // {field:"show_in_menu" , title:"نمایش در منو"},
           {field:"parent_id" , title:"والد"},
-      {
-        field:null,
-        title:"تاریخ",
-        elements:(rowData)=> convertDateToJalali(rowData.created_at)
-        },
-      {
-        field:null,
-        title:"نمایش در منو",
-        elements:(rowData)=><ShowInMenu rowData={rowData}/>
-        },
-        {
-          field:null,
-        title:"عملیات",
-        elements:(rowData)=> <Actions rowData={rowData} 
-        handleDeleteCategory={handleDeleteCategory}/>
-      }
+          {
+            field:null,
+            title:"تاریخ",
+            elements:(rowData)=> convertDateToJalali(rowData.created_at)
+          },
+          {
+            field:null,
+            title:"نمایش در منو",
+            elements:(rowData)=><ShowInMenu rowData={rowData}/>
+          },
+          {
+              field:null,
+              title:"عملیات",
+              elements:(rowData)=> <Actions rowData={rowData} 
+              handleDeleteCategory={handleDeleteCategory}/>
+          }
       ]
 
   const searchParams={
@@ -87,7 +86,6 @@ export default function CategoryTable() {
     placeholder:"متن رو وارد کن",
     searchField:"title"
   }
-
 
     return (
       <> 

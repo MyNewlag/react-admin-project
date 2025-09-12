@@ -28,7 +28,7 @@ import SubmitBotton from '../../../components/form/SubmitBotton';
                 control="input"
                 name="title"
                 type="text"
-                    label="عنوان"
+                label="عنوان"
                 placeholder="عنوان ویژگی جدید"
                 />
 

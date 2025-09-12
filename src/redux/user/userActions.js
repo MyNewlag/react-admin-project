@@ -25,13 +25,3 @@ export const receiveUserError = (error) => {
   };
 };
 
-// export const getRolseActionRedux=()=>{
-//     return (dispatch , state)=>{
-//         dispatch(sendUserRequest())
-//         getUserService().then(res=>{
-//             dispatch(receiveUserResponse(res.data.User))
-//         }).catch(error =>{
-//             dispatch(receiveUserError(error.message))
-//         })
-//     }
-// }

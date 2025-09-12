@@ -28,8 +28,7 @@ export default function Select({options,name,label,className,firstItem,handleCha
                         {handleChange ? 
                             (
                                 <Field as="select" className="form-control" id={name} name={name} 
-                                onChange= {(e)=>handleChange(e.target.value ,form)}  >
-                               
+                                onChange= {(e)=>handleChange(e.target.value ,form)} >
                                   {setOption()}
                                 </Field>
                             ) : (

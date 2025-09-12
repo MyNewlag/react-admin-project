@@ -19,8 +19,7 @@ export default function AddCategory({setForceRender}){
     const {editId,setEditId}=useContext(CategoryContext)
     const [parents,setParents]=useState([])
     const [editCategory,setEditCategory]=useState(null)
-    const [reInitialValue,setReInitialValue]=useState(null)
-
+    const [reInitialValue,setReInitialValue]=useState(null)        
     
     const handleGetParentsCategories =async ()=>{
         try {
@@ -33,6 +32,7 @@ export default function AddCategory({setForceRender}){
                     })) 
                 }
             } catch (error) {
+                console.log(error);
             }
     }
 
@@ -48,7 +48,6 @@ export default function AddCategory({setForceRender}){
         }
     }
 
-
     useEffect(()=>{
         if (editId) {
          handleGetSingleCategory()
@@ -63,7 +62,7 @@ export default function AddCategory({setForceRender}){
             setReInitialValue({
                 parent_id:editCategory.parent_id || "",
                 title:editCategory.title,
-                descriptions:editCategory.descriptions  ,
+                descriptions:editCategory.descriptions ,
                 image:null,
                 is_active:editCategory.is_active ? true : false,
                 show_in_menu:editCategory.show_in_menu ? true : false,
@@ -108,7 +107,7 @@ export default function AddCategory({setForceRender}){
                 <div className="row justify-content-center">
 
                 {
-                parents.length>0 ? (
+                parents.length > 0 ? (
                     <FormikControl
                     className="col-md-6 col-lg-8"
                     control="select"

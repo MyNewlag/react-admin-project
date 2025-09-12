@@ -9,6 +9,8 @@ import { useIsLogin } from '../../hook/authHook';
 export default function AuthLayout() {
 
   const [isLogin,loading]=useIsLogin()
+  
+  isLogin && console.log("asma")
 
   return (
           <div className="limiter">
@@ -28,5 +30,5 @@ export default function AuthLayout() {
               )
             }
            </div>
-  )
+    )
 }

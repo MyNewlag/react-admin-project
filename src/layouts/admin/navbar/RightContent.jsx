@@ -4,6 +4,7 @@ import { AdminContext } from '../../../context/AdminLayoutContext'
  export default function RightContent() {
 
     const {setShowSidebar}=useContext(AdminContext);
+    
 
    return (
      

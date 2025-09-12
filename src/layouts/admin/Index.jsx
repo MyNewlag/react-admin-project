@@ -6,27 +6,8 @@ import Content from '../../pages/Content';
 import { Navigate } from 'react-router-dom';
 import { useIsLogin } from '../../hook/authHook';
 
-// import '../../assets/js/toggleSidebare';
 
 export default function Index() {
-
-  // useEffect(()=>{
-  //   //     document.getElementById('handle_toggle_sidemenu').addEventListener('change' , function(){
-  //   //     if (this.checked) {
-  //   //         document.querySelector('.mini_sidebar').classList.add('expanded')
-  //   //         document.getElementById('content_section').classList.add('with_sidebar')
-  //   //     }else{
-  //   //         document.querySelector('.mini_sidebar').classList.remove('expanded')
-  //   //         document.getElementById('content_section').classList.remove('with_sidebar')
-  //   //     }
-  //   // })
-
-  //   // require('../../assets/js/toggleSidebare')
-  // // import('../../assets/js/toggleSidebare');
-
-  // // toggleSidebar()
-
-  // },[])
 
     const [isLogin,loading]=useIsLogin()
 
@@ -46,7 +27,6 @@ export default function Index() {
         ):(
           <Navigate to={'/auth/login'}/>
         )}
-    
      </AdminContextContainer>
   )
 }

@@ -34,7 +34,8 @@ export default function Index() {
 
        
                <SidebarGropTitle title="فروشگاه" pTitles={[
-             "read_categories",  "read_products",  "read_brands",  "read_guaranties",  "read_colors", "read_discounts"
+             "read_categories",  "read_products",  "read_brands",  "read_guaranties", 
+              "read_colors", "read_discounts"
             ]}/>
 
            
@@ -161,17 +162,7 @@ export default function Index() {
                   title=" نظرات "
                   pTitle="read_comments"
                   />
-                 {/* <!-- <li className="py-2 btn-group dropstart pe-4"/>
-                    <i className="ms-3 icon fas fa-check text-light"></i>
-                    <span className="hiddenable" data-bs-toggle="dropdown" aria-expanded="false">داشبورد</span>
-                    
-                    <ul className="dropdown-menu px-2 sidebar_submenu_list">
-                    <li className="d-none">اول</li>
-                    <li>اول</li>
-                    <li>دوم</li>
-                    <li>سوم</li>
-                    </ul>
-                    </li> --> */}
+                  
                </div>
             </div>
         </div>

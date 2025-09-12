@@ -16,18 +16,18 @@ const initialValues ={
     remember: false
 }
 const onSubmit = async (values,submitMethods,navigate)=>{
-    // console.log(submitMethods); 
+    console.log(submitMethods); 
     try {
     const res=await loginService(values)
         if(res.status==200){
             localStorage.setItem('loginToken' , JSON.stringify(res.data))
             navigate('/')
-            // submitMethods.setSubmitting(false)
+            submitMethods.setSubmitting(false)
         }else{
             console.log(res.status);
             Alert("خطا...",res.data.message,"error")
         }
-        submitMethods.setSubmitting(false)
+        // submitMethods.setSubmitting(false)
         
     } catch (error) {
         submitMethods.setSubmitting(false)

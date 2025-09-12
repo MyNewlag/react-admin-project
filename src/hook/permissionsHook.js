@@ -7,9 +7,9 @@ export const useHasPermission=(pTitle)=>{
     
     let permissions =[]
     for (const role of roles){
-     permissions = [...permissions,...role.permissions]
+        permissions = [...permissions,...role.permissions]
     }
-
+    
     const isAdmin=roles.findIndex(r=>r.title==="admin") > -1
 
     
