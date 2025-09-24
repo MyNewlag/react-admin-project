@@ -1,8 +1,6 @@
 
-
 import React from 'react'
 import ColorTable from './ColorTable'
-import AddColor from './AddColor'
 
 
 

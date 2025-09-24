@@ -78,12 +78,11 @@ export default function DiscountTable() {
     <PaginatedTable
     data={data}
     dataInfo={dataInfo}
-    numOfPage={8}
+    numOfPage={4}
     searchParams={searchParams}
     loading={loading}
     >
         <AddButtonLink href={"/discounts/add-discount-code"}/>
-        {/* <Outlet context={{setData}}/> */}
         <Outlet context={{setData:setData}}/>
     </PaginatedTable>
   )

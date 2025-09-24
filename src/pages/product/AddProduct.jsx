@@ -82,9 +82,8 @@ export default function AddProduct() {
     }
 
     const setIntialSelectedValues=()=>{
+
       if (rowData) {
-
-
         setSelectedCategories(
          rowData.categories.map(c=>{
            return {id:c.id , value:c.title}
@@ -118,7 +117,8 @@ export default function AddProduct() {
             ...rowData,
             category_ids:rowData.categories.map(c=>c.id).join("-"),
             color_ids:rowData.colors.map(c=>c.id).join("-"),
-            guarantee_ids:rowData.guarantees.map(c=>c.id).join("-")
+            guarantee_ids:rowData.guarantees.map(c=>c.id).join("-"),
+            image: ""
           })
         }else{
           setReInitialValue(null)

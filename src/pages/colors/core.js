@@ -5,9 +5,9 @@ import { addColorsService, editColorsService } from '../../service/color';
 
 
      export const onSubmit=async(values,action,setData,editColor,setColorPickerValue)=>{
+       // console.log(values);
     
           if (editColor) {
-            console.log(values);
               const res=await editColorsService(editColor.id,values)
               
               if (res.status==200) {
@@ -32,7 +32,7 @@ import { addColorsService, editColorsService } from '../../service/color';
       
      export  const initialValues={
         title:"",
-        code: "#2a0f"
+        code: ""
       }
   
        export const validationSchema=yup.object({

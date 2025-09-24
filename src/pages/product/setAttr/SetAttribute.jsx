@@ -21,36 +21,12 @@ export default function SetAttribute() {
     const [validationSchema,setValidationSchema]=useState({})
 
 
-        //     const handleGetAttributes= async()=>{    
-        //   let attrVar=[]
-        //      let initials={}
-        //      let rules={}
-        //     await Promise.all (
-        //     selectedProduct.categories.map(async (cat)=>{
-        //         const res=await getCategoryAttrService(cat.id)
-        //         if (res.status==200) {
-        //             attrVar=[...attrVar , {groupTitle:cat.title , data:res.data.data}] 
-        //             if (res.data.data.length>0){
-        //                 for (const d of res.data.data) {
-        //                     initials={...initials , [d.id]:""}
-        //                     rules={...rules , [d.id]: yup.string()
-        //                         .matches(/^[\u0600-\u06FF\sa-zA-Z0-9@!%-.$?&]+$/, "فقط از حروف و اعداد استفاده شود")}
-        //             } 
-        //         }
-        //         }else{
-        //             return {groupTitle:cat.title , data:[]}
-        //         }
-        //             })).then(()=>{
-        //                 setAttrs(attrVar)
-        //                 setInitialValues(initials)
-        //             // setInitialValues(Object.keys(initials).length>0 ? initials :{})
-        //         setValidationSchema(Object.keys(initials).length>0 ? yup.object(rules) :{})
-        //             })
-        //         }
 
     const handleGetAttributes= async()=>{
         const {allAttributes,initials, rules}=  await initializingData(selectedProduct)
-
+        
+            console.log(initials);
+            
                  setAttrs(allAttributes)
                 // setInitialValues(initials)
                  setInitialValues(Object.keys(initials).length>0 ? initials :{})

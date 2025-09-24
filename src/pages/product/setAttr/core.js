@@ -7,7 +7,7 @@ import * as yup from "yup";
 
 
 export const onSubmit=async (values,action,productId)=>{
-    console.log(values);
+    // console.log(values);
     
     let data={}
     for (const key in values) {
@@ -19,7 +19,7 @@ export const onSubmit=async (values,action,productId)=>{
     const res=await addProductsAttributeService(productId , data)  
         if (res.status==200) {
             Alert('انجام شد',res.data.message,'success')
-            console.log(res.data.data);
+            // console.log(res.data.data);
         }
     }
 

@@ -40,10 +40,18 @@ export const addProductImage = (id, data) => {
   return httpService(`/admin/products/${id}/add_image`, "post", data);
 };
 
+export const deleteProductImageService = (id) => {
+  return httpService(`/admin/products/gallery/${id}`, "delete");
+};
+
+export const setMainProductImageService = (id) => {
+  return httpService(`/admin/products/gallery/set_main/${id}`, "get");
+};
+
 export const getFewerProductService = () => {
   return httpService(`/admin/products/fewer_products`, "get");
 };
 
 export const toggleNotificationService = (id) => {
-  return httpService(`/admin/products/toggle_notification/${id}`, "get" );
+  return httpService(`/admin/products/toggle_notification/${id}`, "get");
 };

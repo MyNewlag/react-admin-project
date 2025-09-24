@@ -32,6 +32,7 @@ export default function AddDiscount() {
     const handleSetProductSelectBox=(formik)=>{
         const idsArr=formik.values.product_ids.split("-").filter(id=>id)
         const selectedProductArr=idsArr.map(id=>allProducts.filter(p=>p.id==id)[0]).filter(product=>product)
+
         
             return(
                 <FormikControl
@@ -84,6 +85,8 @@ export default function AddDiscount() {
                 >
 
                 {formik =>{
+                    console.log(formik);
+                    
                     return(
                         <Form>
                             
